@@ -19,6 +19,9 @@
             <div class="col">
               <img class="img-fluid m-3" src="images/logo.png" style="max-width:350px"/><br>
             </div>
+            <div class="col m-5">
+                <jsp:include page="menu.jsp" flush="true" />
+            </div>
         </div>
         <script>
             function ingreso(){
@@ -40,7 +43,7 @@
                 <div class="col-md-5">
                     <select class="form-select" id="floatingSelect" aria-label="Elija uno" name="tipoVehiculo">
                     <option value="moto">Motocicleta</option>
-                    <option value="carro">Carro</option>
+                    <option value="carro">Automovil</option>
                     <option value="bicicleta">Bicicleta</option>
                     </select>
                 </div>

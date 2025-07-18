@@ -4,5 +4,6 @@ com\fabian\senapractica\rparksoft\JakartaRestConfiguration.class
 com\fabian\senapractica\rparksoft\controller\CtrlLoggin.class
 com\fabian\senapractica\rparksoft\model\JpaUtil.class
 com\fabian\senapractica\rparksoft\resources\JakartaEE10Resource.class
+com\fabian\senapractica\rparksoft\servlets\SvMenu.class
 com\fabian\senapractica\rparksoft\servlets\SvLoggin.class
 com\fabian\senapractica\rparksoft\controller\CtrlPrincipal.class
