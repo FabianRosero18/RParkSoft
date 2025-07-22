@@ -73,13 +73,13 @@
                     <label class="fs-3 fw-bold fst-italic">Numero de factura</label>                    
                 </div>
                 <div class="col-md-2">
-                    <input class="form-control" type="type" name="numeroSalida">                
+                    <input class="form-control" type="text" name="numeroSalida">                
                 </div>
                 <div class="col-md-2 text-start ms-5 text-end">
                     <label class="fs-3 fw-bold fst-italic">Placa</label>                    
                 </div>
                 <div class="col-md-2">
-                    <input class="form-control justify-content-start" type="type" name="placaSalida">                
+                    <input class="form-control justify-content-start" type="text" name="placaSalida">                
                 </div>
                 <div class="col-md-2 d-flex justify-content-end">
                     <button type="button" onclick="salida()" class="btn btn-secondary btn-lg">Salida</button>

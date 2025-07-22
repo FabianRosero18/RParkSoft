@@ -50,8 +50,9 @@ public class CtrlPrincipal {
         LocalDateTime actual = LocalDateTime.now();
         //dar formato de fecha actual
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        //guardamos la fecha en la variable string segun el formato definido
         fechaHora = actual.format(formatter);
-        System.out.println(accion);
+
         if(accion.equals("ingreso")){
             this.ingreso();
         }else if( accion.equals("salida")){
