@@ -37,19 +37,15 @@ public class SvPrincipal extends HttpServlet {
         CtrlPrincipal p = new CtrlPrincipal();
         p.consulta();
         
+        //creamos una lista para pasarla al JSP a traves del atributo de sesion
         List<EntityPrincipal> registros = p.getRegistros();
         
-        registros.forEach(item ->{
-            System.out.println("tipo = "+item.getTipoVehiculo());
-            System.out.println("placa = "+item.getPlaca());
-            System.out.println("fecha y hora = "+item.getFechaHora());
-            System.out.println("id factura = "+item.getIdFactura());
-        });
         
         int cantidadCarros = p.cantidadCarros().intValue();
         int cantidadMotos = p.cantidadMotos().intValue();
         int cantidadBicicletas = p.cantidadBicicletas().intValue();
         
+        //creando un atributo de sesion para pasar los parametros al JSP
         HttpSession session = request.getSession();
         session.setAttribute("registros", registros);
         session.setAttribute("cantidadCarros", cantidadCarros);
@@ -66,17 +62,20 @@ public class SvPrincipal extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        var tipo = request.getParameter("tipoVehiculo");
-        var placa = request.getParameter("placa");
-        var accion = request.getParameter("accion");
-        var numeroFactura = request.getParameter("numeroSalida");
-        var placaSalida = request.getParameter("placaSalida");
-        
+        String  tipo = request.getParameter("tipoVehiculo");
+        String  placa = request.getParameter("placa");
+        String  accion = request.getParameter("accion");
+        String  numeroFactura = request.getParameter("numeroSalida");
+        String  placaSalida = request.getParameter("placaSalida");
+                
         CtrlPrincipal p = new CtrlPrincipal(tipo,placa,accion,numeroFactura,placaSalida);
         p.accion();
-
-        response.sendRedirect("principal.jsp");
-
+        
+        //ademas de session, otra manera de pasar atributos al JSP es mediante request, se hace asi:
+        request.setAttribute("valorPagar", p.getValorPagar());
+        request.setAttribute("mensajeSalida", p.getMensajeSalida());
+        request.getRequestDispatcher("principal.jsp").forward(request, response);
+        
     }
 
 

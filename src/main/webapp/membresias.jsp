@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
     <head>
@@ -92,9 +93,9 @@
                             <div class="row">    
                                 <div class="col">
                                     <select class="form-select" id="floatingSelect" aria-label="Elija uno" name="tipoVehiculo">
-                                    <option value="moto">Motocicleta</option>
-                                    <option value="automovil">Automovil</option>
-                                    <option value="bicicleta">Bicicleta</option>
+                                    <option value="Motocicleta">Motocicleta</option>
+                                    <option value="Automovil">Automovil</option>
+                                    <option value="Bicicleta">Bicicleta</option>
                                     </select>
                                 </div>    
                             </div>        
@@ -156,7 +157,7 @@
             
             <br>
             
-            <<form action="SvMembresias" method="GET">
+            <form action="SvMembresias" method="GET">
                 
             <div class="row m-2">
                 <div class="col">
@@ -178,7 +179,7 @@
                     <label class="fw-semibold fs-5 ">Dias restantes</label> 
                 </div>
                 <div class="col-md-1">
-                    <input class="form-control" type="text" name="dias" disabled="true">   
+                    <input class="form-control" type="text" name="dias" disabled="true" value="${diasRestantes}">   
                 </div>
                 <div class="col-md-1 d-grid gap-5 align-self-end offset-md-1">
                     <button class="btn btn-secondary btn-lg">Ingresar</button>

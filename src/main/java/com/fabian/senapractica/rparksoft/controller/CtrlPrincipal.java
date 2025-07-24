@@ -9,6 +9,7 @@ import com.fabian.senapractica.rparksoft.model.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,9 +26,10 @@ public class CtrlPrincipal {
     private EntityManager em;
     private String fechaHora;
     private List<EntityPrincipal> registros;
-    
-
-
+    private int valorPagar;
+    private Boolean mensajeSalida = Boolean.FALSE;
+    private LocalDateTime actual;
+    private DateTimeFormatter formatter;
 
     public CtrlPrincipal() {
         this.registros = new ArrayList();
@@ -47,12 +49,12 @@ public class CtrlPrincipal {
     public void accion(){
         
         //obtener la fecha actual
-        LocalDateTime actual = LocalDateTime.now();
+        actual = LocalDateTime.now();
         //dar formato de fecha actual
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         //guardamos la fecha en la variable string segun el formato definido
         fechaHora = actual.format(formatter);
-
+        
         if(accion.equals("ingreso")){
             this.ingreso();
         }else if( accion.equals("salida")){
@@ -80,20 +82,17 @@ public class CtrlPrincipal {
        
     }
     private void validarSalida(){
-        System.out.println("placa "+placaSalida);
-        System.out.println("factura "+numeroFactura);
+
         try{
             em.getTransaction().begin();
 
             if(placaSalida.isEmpty()){
-                System.out.println("entro aca");
-                vehiculo = em.find(EntityPrincipal.class, numeroFactura);
+               
+                vehiculo = consultaPorId();
             }
             else if (numeroFactura.isEmpty()){
-                
-                // TypedQuery<EntityPrincipal> se usa para indicar al compilador que la consulta retornara un objeto del tipo EntityPrincipal
-                TypedQuery<EntityPrincipal> consulta = em.createQuery("Select v from EntityPrincipal v where v.placa =:placa",EntityPrincipal.class).setParameter("placa", placaSalida);
-                vehiculo = consulta.getSingleResult();
+
+                vehiculo = consultaPorPlaca();
             }
             this.salida();
             
@@ -103,18 +102,77 @@ public class CtrlPrincipal {
         }
     }
     private void salida(){
+        
+        mensajeSalida = Boolean.TRUE;
+        
+        //obtenemos la fecha de ingreso al parking de la base de datos, pero como esta en String debemos convertirla a LocalDateTime con la funcion parse, pasando la fecha y el formato
+        LocalDateTime fechaIngresoParking = LocalDateTime.parse(vehiculo.getFechaHora(),formatter);
+        
+        //con la clase Duration podemos obtener el tiempo transcurrido entre la entrada y salida del vehiculo
+        Duration duracion = Duration.between(fechaIngresoParking, actual);
+        
+        //obtenemos con las respectivas funciones las horas y los minutos transcurridos (minutos sobrantes de las horas, modulo de 60)
+        long horas = duracion.toHours();
+        long minutos= duracion.toMinutes()%60;
+        
+        //ya que en el parking los minutos pasados se cobran como hora, entonces se adiciona 1 hora mas si se ha pasado
+        if(minutos > 0){
+            horas += 1;
+        }
+        
+        System.out.println("horas a cobrar: "+horas);
+        this.calcularTarifa(horas);
+        
         em.remove(vehiculo);
         em.getTransaction().commit();
         em.close();
     }
+    
+    public void calcularTarifa(long horas){
+        
+        switch (vehiculo.getTipoVehiculo()) {
+            case "Automovil":
+                valorPagar = (int) (horas * 3200);
+                break;
+            case "Motocicleta":
+                valorPagar = (int) (horas * 1500);
+                break;
+            case "Bicicleta":
+                valorPagar = (int) (horas * 800);
+                break;
+        }
+    }
+    
     public void consulta(){
+        
         Query query = em.createQuery("select p from EntityPrincipal p",EntityPrincipal.class);
         registros = query.getResultList();
     }
-
+    
+    public EntityPrincipal consultaPorId(){
+        
+        return em.find(EntityPrincipal.class, numeroFactura);
+    }
+    
+    public EntityPrincipal consultaPorPlaca(){
+        
+        // TypedQuery<EntityPrincipal> se usa para indicar al compilador que la consulta retornara un objeto del tipo EntityPrincipal
+        TypedQuery<EntityPrincipal> consulta = em.createQuery("Select v from EntityPrincipal v where v.placa =:placa",EntityPrincipal.class).setParameter("placa", placaSalida);
+        return consulta.getSingleResult();
+    }
+    
     public List<EntityPrincipal> getRegistros(){
         return registros;
     }
+
+    public int getValorPagar() {
+        return valorPagar;
+    }
+
+    public Boolean getMensajeSalida() {
+        return mensajeSalida;
+    }
+
     private Long contarPorTipoVehiculo(String tipoVehiculo) {
         String consulta = "SELECT COUNT(e) FROM EntityPrincipal e WHERE e.tipoVehiculo = :tipoVehiculo";
         return em.createQuery(consulta, Long.class)
@@ -123,15 +181,15 @@ public class CtrlPrincipal {
     }
 
     public Long cantidadBicicletas() {
-        return contarPorTipoVehiculo("bicicleta");
+        return contarPorTipoVehiculo("Bicicleta");
     }
 
     public Long cantidadMotos() {
-        return contarPorTipoVehiculo("moto");
+        return contarPorTipoVehiculo("Motocicleta");
     }
 
     public Long cantidadCarros() {
-        return contarPorTipoVehiculo("carro");
+        return contarPorTipoVehiculo("Automovil");
     } 
 
 }

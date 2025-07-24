@@ -23,17 +23,9 @@
                 <jsp:include page="menu.jsp" flush="true" />
             </div>
         </div>
-        <script>
-            function ingreso(){
-                document.getElementById("seleccion").value="ingreso";
-                document.getElementById("formIngresoRetiro").submit();
-            }
-            function salida(){
-                document.getElementById("seleccion").value="salida";
-                document.getElementById("formIngresoRetiro").submit();
-            }            
-        </script>
+
         <form id="formIngresoRetiro" action="SvPrincipal" method="POST">
+            
             
             <div class="row m-2">                
                 <div class="col-md-3 text-rignt ms-5">
@@ -42,13 +34,13 @@
                 
                 <div class="col-md-5">
                     <select class="form-select" id="floatingSelect" aria-label="Elija uno" name="tipoVehiculo">
-                    <option value="moto">Motocicleta</option>
-                    <option value="carro">Automovil</option>
-                    <option value="bicicleta">Bicicleta</option>
+                    <option value="Moto">Motocicleta</option>
+                    <option value="Automovil">Automovil</option>
+                    <option value="Bicicleta">Bicicleta</option>
                     </select>
                 </div>
                 <div class="col-md-3 d-flex justify-content-center">
-                     <button type="button" onclick="ingreso()" class="btn btn-secondary btn-lg">Ingreso</button>
+                       <button type="submit" name="accion" value="ingreso" class="btn btn-secondary btn-lg">Ingreso</button>
                 </div>
             </div>
             
@@ -82,11 +74,16 @@
                     <input class="form-control justify-content-start" type="text" name="placaSalida">                
                 </div>
                 <div class="col-md-2 d-flex justify-content-end">
-                    <button type="button" onclick="salida()" class="btn btn-secondary btn-lg">Salida</button>
+                    <button type="submit" name="accion" value="salida" class="btn btn-secondary btn-lg">Salida</button>
                 </div>
             </div>
-            
-            <input type="hidden" name="accion" id="seleccion" value="">
+            <!-- usamos JSTL para validar si el mensaje de salida es exitoso, y lo mostramos usando el atributo pasado por Request.setParameter -->
+            <c:if test="${mensajeSalida}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p class="fs-3">valor a pagar $= ${valorPagar}. Recuerde refrescar la Tabla</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </c:if>
 
         </form>
         
@@ -106,9 +103,10 @@
                     <label class="fw-normal fs-3">Cantidad de vehiculos</label>
                 </div>
                 <div class="col-md-2 d-flex justify-content-end">
-                    <label class="fw-normal fs-4">Carros</label>
+                    <label class="fw-normal fs-4">Automoviles</label>
                 </div>
                 <div class="col-md-1">
+                    <!-- atributo pasado por session, lo mostamos usando JSTL -->
                     <input class="form-control" type="text" name="cantCarros" disabled value="${cantidadCarros}">
                 </div>
                 <div class="col-md-2 d-flex justify-content-end">
@@ -139,6 +137,7 @@
                                 <th>Factura</th>
                             </tr>
                         </thead>
+                        <!-- mediante JSTL creamos un foreach para recorrer el arreglo de registros enviado por session desde el servlet -->
                         <c:forEach var="item" items="${sessionScope.registros}">
                         <tbody>
                             <tr>

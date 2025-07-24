@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -30,6 +31,20 @@ public class SvMembresias extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        var id = request.getParameter("id");
+        
+        CtrlMembresias membresias = new CtrlMembresias();
+        membresias.ingresoParking(id);
+
+        int diasRestantes = membresias.getDiasRestantes().intValue();
+        
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("diasRestantes", diasRestantes);
+        
+        response.sendRedirect("membresias.jsp");
+        
     }
 
 
