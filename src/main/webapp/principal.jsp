@@ -40,7 +40,9 @@
                     </select>
                 </div>
                 <div class="col-md-3 d-flex justify-content-center">
-                       <button type="submit" name="accion" value="ingreso" class="btn btn-secondary btn-lg">Ingreso</button>
+                        <!--se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
+                            salida o entrada-->
+                        <button type="submit" name="accion" value="ingreso" class="btn btn-secondary btn-lg">Ingreso</button>
                 </div>
             </div>
             
@@ -74,6 +76,8 @@
                     <input class="form-control justify-content-start" type="text" name="placaSalida">                
                 </div>
                 <div class="col-md-2 d-flex justify-content-end">
+                   <!-- se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
+                        salida o entrada-->
                     <button type="submit" name="accion" value="salida" class="btn btn-secondary btn-lg">Salida</button>
                 </div>
             </div>

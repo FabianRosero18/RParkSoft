@@ -33,15 +33,22 @@ public class SvMembresias extends HttpServlet {
         processRequest(request, response);
         
         var id = request.getParameter("id");
-        
+        var accion = request.getParameter("accion");
+                
         CtrlMembresias membresias = new CtrlMembresias();
-        membresias.ingresoParking(id);
-
-        int diasRestantes = membresias.getDiasRestantes().intValue();
+        membresias.validarAccion(id, accion);
         
+        int diasRestantes = membresias.getDiasRestantes().intValue();
+        Boolean vigenciaActiva = membresias.getVigenciaActiva();
+        Boolean vigenciaVencida = membresias.getVigenciaVencida();
+        Boolean renovacionExitosa = membresias.getRenovacionExitosa();
         
         HttpSession session = request.getSession();
         session.setAttribute("diasRestantes", diasRestantes);
+        session.setAttribute("vigenciaActiva", vigenciaActiva);
+        session.setAttribute("vigenciaVencida",vigenciaVencida);
+        session.setAttribute("renovacionExitosa", renovacionExitosa);
+        session.setAttribute("id", id);
         
         response.sendRedirect("membresias.jsp");
         

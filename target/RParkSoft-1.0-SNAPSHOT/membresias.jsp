@@ -166,6 +166,7 @@
             </div>
             
             <br>
+            
             <div class="row m-2">
                 <div class="col-md-1">  
                 </div>
@@ -173,7 +174,7 @@
                     <label class="fw-semibold fs-5">Numero de identificacion </label> 
                 </div>
                 <div class="col-md-3">
-                    <input class="form-control" type="text" name="id">   
+                    <input class="form-control" type="text" name="id" id="id">   
                 </div>
                 <div class="col-md-2  text-end">
                     <label class="fw-semibold fs-5 ">Dias restantes</label> 
@@ -182,18 +183,53 @@
                     <input class="form-control" type="text" name="dias" disabled="true" value="${diasRestantes}">   
                 </div>
                 <div class="col-md-1 d-grid gap-5 align-self-end offset-md-1">
-                    <button class="btn btn-secondary btn-lg">Ingresar</button>
+                    <button class="btn btn-secondary btn-lg" name="accion" value="ingreso">Ingresar</button>
                 </div>
-            </div>    
+            </div>
+                
+                <c:if test="${vigenciaActiva}">
+                <div class="row">
+                    <div class="col">                    
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <p class="fs-3">Cliente ingresado al parqueadero, no olvide refrescar el listado en modulo principal</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>    
+                </c:if>
+                
+                <c:if test="${vigenciaVencida}">
+                <script>
+                    document.getElementById("id").value = "${sessionScope.id}";
+                </script>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <p class="fs-3">Cliente con vigencia vencida, debe renovarse</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="col-md-1 d-grid gap-5 align-self-center">
+                        <button class="btn btn-secondary btn-lg" name="accion" value="renovacion">Click aqui para renovar</button>
+                    </div>
+                </div>                       
+                </c:if>
+
+                <c:if test="${renovacionExitosa}">                
+                <div class="row">
+                    <div class="col">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <p class="fs-3">Renovacion realizada con exito, proceda con el formulario de ingreso</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>  
+                    </div>
+                </div>                   
+                </c:if>
             </form>
                 
             <br>
-
-            <div class="row">
-                <div class="col">
-                        
-                </div>
-            </div>                
+            
+              
                 
                 
         

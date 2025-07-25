@@ -25,12 +25,16 @@ public class CtrlMembresias {
     private String placa;
     private String telefono;
     private String direccion;
-    private String fechaRegistro;
+    private String fechaHoraActual;
+    private DateTimeFormatter formatter; 
     private EntityPrincipal ingreso;
     private EntityManager em;
     private EntityMembresias membresia;
-    private Long diasRestantes;
-
+    private Long diasRestantes = 30L;
+    private Boolean vigenciaActiva = Boolean.FALSE;
+    private Boolean vigenciaVencida = Boolean.FALSE;
+    private Boolean renovacionExitosa = Boolean.FALSE;
+    
     public CtrlMembresias() {
         this.em = JpaUtil.getEntityManager();
         this.membresia = new EntityMembresias();
@@ -46,15 +50,18 @@ public class CtrlMembresias {
         this.telefono = telefono;
         this.direccion = direccion;
     }
-    
-    public void insertarMembresia(){
-        
+    public void fechaRegistro(){
         //obtener la fecha actual
         LocalDateTime actual = LocalDateTime.now();
         //dar formato de fecha actual
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         //guardamos la fecha en la variable string segun el formato definido
-        fechaRegistro = actual.format(formatter);
+        fechaHoraActual = actual.format(formatter);
+        
+    }
+    public void insertarMembresia(){
+        
+        this.fechaRegistro();
         
         try {
             em.getTransaction().begin();
@@ -65,7 +72,7 @@ public class CtrlMembresias {
             membresia.setPlaca(placa);
             membresia.setTelefono(telefono);
             membresia.setDireccion(direccion);
-            membresia.setFechaRegistro(fechaRegistro);
+            membresia.setFechaRegistro(fechaHoraActual);
             em.persist(membresia);
             em.getTransaction().commit();
             
@@ -79,9 +86,29 @@ public class CtrlMembresias {
         }
   
     }
+    public void validarAccion(String id, String accion){
+        
+        switch (accion) {
+            
+            case "ingreso":
+                this.ingresoParking(id);
+                break;
+                
+            case "renovacion":
+                this.renovacion(id);
+                break;
+                
+            default:
+                throw new AssertionError();
+        }
+        
+    }
+    
     public void ingresoParking(String id){
         
         ingreso = new EntityPrincipal();
+        
+        this.fechaRegistro();
         
         LocalDateTime actual = LocalDateTime.now();
         //dar formato de fecha actual
@@ -95,16 +122,20 @@ public class CtrlMembresias {
             LocalDateTime fechaRegistroConvertida = LocalDateTime.parse(membresia.getFechaRegistro(),formatter);
             
             long diasTranscurridos = ChronoUnit.DAYS.between(fechaRegistroConvertida, actual);
-            diasRestantes = 30 - diasTranscurridos;
+            diasRestantes -= diasTranscurridos;
                     
             //System.out.println("dias restantes: " + diasRestantes);
             
             if(diasRestantes > 0){
+                vigenciaActiva = Boolean.TRUE;
                 ingreso.setTipoVehiculo(membresia.getTipoVehiculo());
                 ingreso.setPlaca(membresia.getPlaca());
                 ingreso.setFechaHora(fechaHoraIngreso);
                 em.persist(ingreso);
                 em.getTransaction().commit();
+            }
+            else{
+                vigenciaVencida = Boolean.TRUE;
             }
 
         } catch (Exception e) {
@@ -114,14 +145,49 @@ public class CtrlMembresias {
         } finally {
             em.close();            
         }
+ 
+    }
+    public void renovacion(String id){
         
+        this.fechaRegistro();
+                
+        try {
+            em.getTransaction().begin();
+            membresia = em.find(EntityMembresias.class, id);
+            membresia.setFechaRegistro(fechaHoraActual);
+            em.getTransaction().commit();
+            
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+            
+        } finally {
+            em.close();
+        }
+        
+        vigenciaVencida = Boolean.FALSE;
+        renovacionExitosa = Boolean.TRUE;
+        
+        /*Query query = em.createQuery("UPDATE EntityMembresias m SET m.fechaRegistro = :fechaRegistro WHERE m.idCliente = :id")
+                .setParameter("fechaRegistro", fechaHoraActual)
+                .setParameter("id", Long.valueOf(id));*/
         
     }
 
     public Long getDiasRestantes() {
         return diasRestantes;
     }
-    
-    
-    
+
+    public Boolean getVigenciaActiva() {
+        return vigenciaActiva;
+    }
+
+    public Boolean getVigenciaVencida() {
+        return vigenciaVencida;
+    }
+
+    public Boolean getRenovacionExitosa() {
+        return renovacionExitosa;
+    }
+
 }
