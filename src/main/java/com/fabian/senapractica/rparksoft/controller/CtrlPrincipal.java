@@ -130,7 +130,7 @@ public class CtrlPrincipal {
     
     public void calcularTarifa(long horas){
         
-        switch (vehiculo.getTipoVehiculo()) {
+        /*switch (vehiculo.getTipoVehiculo()) {
             case "Automovil":
                 valorPagar = (int) (horas * 3200);
                 break;
@@ -140,7 +140,12 @@ public class CtrlPrincipal {
             case "Bicicleta":
                 valorPagar = (int) (horas * 800);
                 break;
-        }
+        }*/
+        
+        CtrlTarifas tarifa = new CtrlTarifas();
+        tarifa.consultarPorVehiculo(vehiculo.getTipoVehiculo(), em);
+        valorPagar = (int) (horas * tarifa.getTarifaPorVehiculo());
+                
     }
     
     public void consulta(){

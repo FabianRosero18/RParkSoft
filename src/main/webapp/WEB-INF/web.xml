@@ -8,5 +8,45 @@
             30
         </session-timeout>
     </session-config>
+    <servlet>
+        <servlet-name>SvLoggin</servlet-name>
+        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvLoggin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SvLoggin</servlet-name>
+        <url-pattern>/SvLoggin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SvMembresias</servlet-name>
+        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvMembresias</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SvMembresias</servlet-name>
+        <url-pattern>/SvMembresias</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SvPrincipal</servlet-name>
+        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvPrincipal</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SvPrincipal</servlet-name>
+        <url-pattern>/SvPrincipal</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SvTarifas</servlet-name>
+        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvTarifas</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SvTarifas</servlet-name>
+        <url-pattern>/SvTarifas</url-pattern>
+    </servlet-mapping>
+        <servlet>
+        <servlet-name>SvMenu</servlet-name>
+        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvMenu</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SvMenu</servlet-name>
+        <url-pattern>/SvMenu</url-pattern>
+    </servlet-mapping>    
 
 </web-app>

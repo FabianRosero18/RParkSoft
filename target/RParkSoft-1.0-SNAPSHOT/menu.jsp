@@ -28,6 +28,9 @@
                             <button class="nav-link" aria-current="page" onclick="javascript:document.getElementById('seleccion').value = 'membresias.jsp'">Membresias</button>
                         </li>
                         <li class="nav-item">
+                            <button class="nav-link" aria-current="page" onclick="javascript:document.getElementById('seleccion').value = 'tarifas.jsp'">Tarifas</button>                            
+                        </li>
+                        <li class="nav-item">
                             <button class="nav-link" aria-current="page" onclick="javascript:document.getElementById('seleccion').value = 'index.jsp'">Cerrar Sesion</button>
                         </li>
                     </ul>
