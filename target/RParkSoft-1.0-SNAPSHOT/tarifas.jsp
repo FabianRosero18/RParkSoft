@@ -25,6 +25,12 @@
         </div>
             <br>   
         <form action="SvTarifas" method="GET">
+            
+            <div class="row m-2">
+                <div class="col">
+                    <label class="fs-1 fw-bold fst-italic">Tarifas actuales</label>    
+                </div>
+            </div>            
                 
             <div class="row m-2">
                 <div class="col-md-6 text-end">
