@@ -59,7 +59,7 @@
                         <div class="col-md-5 offset-md-1">
                             <div class="row">
                                 <div class="col">
-                                    <label class="fw-semibold fs-5">Nombre </label>
+                                    <label class="fw-semibold fs-5">Nombre</label>
                                 </div>
                             </div>    
                             <div class="row">    
