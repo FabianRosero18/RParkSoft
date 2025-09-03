@@ -34,7 +34,7 @@
                 
                 <div class="col-md-5">
                     <select class="form-select" id="floatingSelect" aria-label="Elija uno" name="tipoVehiculo">
-                    <option value="Moto">Motocicleta</option>
+                    <option value="Motocicleta">Motocicleta</option>
                     <option value="Automovil">Automovil</option>
                     <option value="Bicicleta">Bicicleta</option>
                     </select>

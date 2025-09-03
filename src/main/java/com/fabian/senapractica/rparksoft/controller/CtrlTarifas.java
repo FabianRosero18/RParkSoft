@@ -50,8 +50,8 @@ public class CtrlTarifas {
     public void actualizarTarifas(String tipo, int valor){
         
         EntityManager em = JpaUtil.getEntityManager();
+        em.getTransaction().begin();
         this.consultarPorVehiculo(tipo,em);
-        
         tarifaPorVehiculo.setValor(valor);
         em.merge(tarifaPorVehiculo);
         em.getTransaction().commit();
