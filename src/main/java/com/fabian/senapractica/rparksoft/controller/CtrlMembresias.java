@@ -4,9 +4,9 @@
  */
 package com.fabian.senapractica.rparksoft.controller;
 
-import com.fabian.senapractica.rparksoft.model.EntityMembresias;
-import com.fabian.senapractica.rparksoft.model.EntityPrincipal;
-import com.fabian.senapractica.rparksoft.model.JpaUtil;
+import com.fabian.senapractica.rparksoft.modelAnterior.EntityMembresias;
+import com.fabian.senapractica.rparksoft.modelAnterior.EntityPrincipal;
+import com.fabian.senapractica.rparksoft.modelAnterior.JpaUtil;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -4,8 +4,8 @@
  */
 package com.fabian.senapractica.rparksoft.controller;
 
-import com.fabian.senapractica.rparksoft.model.EntityPrincipal;
-import com.fabian.senapractica.rparksoft.model.JpaUtil;
+import com.fabian.senapractica.rparksoft.modelAnterior.EntityPrincipal;
+import com.fabian.senapractica.rparksoft.modelAnterior.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;

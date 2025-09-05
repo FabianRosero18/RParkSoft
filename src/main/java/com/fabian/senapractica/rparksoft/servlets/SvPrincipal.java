@@ -5,7 +5,7 @@
 package com.fabian.senapractica.rparksoft.servlets;
 
 import com.fabian.senapractica.rparksoft.controller.CtrlPrincipal;
-import com.fabian.senapractica.rparksoft.model.EntityPrincipal;
+import com.fabian.senapractica.rparksoft.modelAnterior.EntityPrincipal;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

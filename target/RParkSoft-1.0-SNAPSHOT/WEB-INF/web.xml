@@ -17,12 +17,12 @@
         <url-pattern>/SvLoggin</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>SvMembresias</servlet-name>
-        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvMembresias</servlet-class>
+        <servlet-name>SvVehiculos</servlet-name>
+        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvVehiculos</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SvMembresias</servlet-name>
-        <url-pattern>/SvMembresias</url-pattern>
+        <servlet-name>SvVehiculos</servlet-name>
+        <url-pattern>/SvVehiculos</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>SvPrincipal</servlet-name>
@@ -40,7 +40,7 @@
         <servlet-name>SvTarifas</servlet-name>
         <url-pattern>/SvTarifas</url-pattern>
     </servlet-mapping>
-        <servlet>
+    <servlet>
         <servlet-name>SvMenu</servlet-name>
         <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvMenu</servlet-class>
     </servlet>
@@ -48,5 +48,12 @@
         <servlet-name>SvMenu</servlet-name>
         <url-pattern>/SvMenu</url-pattern>
     </servlet-mapping>    
-
+    <servlet>
+        <servlet-name>SvUsuarios</servlet-name>
+        <servlet-class>com.fabian.senapractica.rparksoft.servlets.SvUsuarios</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SvUsuarios</servlet-name>
+        <url-pattern>/SvUsuarios</url-pattern>
+    </servlet-mapping>
 </web-app>

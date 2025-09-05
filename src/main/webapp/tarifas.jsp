@@ -26,41 +26,75 @@
             <br>   
         <form action="SvTarifas" method="GET">
             
-            <div class="row m-2">
-                <div class="col">
-                    <label class="fs-1 fw-bold fst-italic">Tarifas actuales</label>    
+                <div class="row m-2">
+                    <div class="col">
+                        <label class="fs-1 fw-bold fst-italic">Tarifas actuales</label>    
+                    </div>
+                </div>            
+            
+            
+        <div class="row">
+            <div class="col">
+
+                <div class="row m-2">
+                    <div class="col-md-6 text-end">
+                        <label class="fw-semibold fs-5"> Tarifa actual Motocicleta x hora $</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text" value="${sessionScope.valores.get(1)}" disabled>
+                    </div>
                 </div>
-            </div>            
-                
-            <div class="row m-2">
-                <div class="col-md-6 text-end">
-                    <label class="fw-semibold fs-5"> Tarifa actual Motocicleta</label>
+                <div class="row m-2">
+                    <div class="col-md-6 text-end">
+                        <label class="fw-semibold fs-5"> Tarifa actual Automovil x hora $</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text" value="${sessionScope.valores.get(0)}" disabled>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text" name="motoActual" value="${sessionScope.valores.get(1)}" disabled>
+                <div class="row m-2">
+                    <div class="col-md-6 text-end">
+                        <label class="fw-semibold fs-5"> Tarifa actual Bicicleta x hora $</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text" value="${sessionScope.valores.get(2)}" disabled>
+                    </div>
                 </div>
             </div>
-            <div class="row m-2">
-                <div class="col-md-6 text-end">
-                    <label class="fw-semibold fs-5"> Tarifa actual Automovil</label>
+            <div class="col">         
+
+                <div class="row m-2">
+                    <div class="col-md-6 text-end">
+                        <label class="fw-semibold fs-5"> Tarifa actual Motocicleta x dia $</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text" value="${sessionScope.valores.get(1)}" disabled>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text" name="autoActual" value="${sessionScope.valores.get(0)}" disabled>
+                <div class="row m-2">
+                    <div class="col-md-6 text-end">
+                        <label class="fw-semibold fs-5"> Tarifa actual Automovil x dia $</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text" value="${sessionScope.valores.get(0)}" disabled>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-md-6 text-end">
+                        <label class="fw-semibold fs-5"> Tarifa actual Bicicleta x dia $</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" type="text" value="${sessionScope.valores.get(2)}" disabled>
+                    </div>
                 </div>
             </div>
-            <div class="row m-2">
-                <div class="col-md-6 text-end">
-                    <label class="fw-semibold fs-5"> Tarifa actual Bicicleta</label>
+        </div>            
+                <div class="row m-4">
+                    <div class="d-grid gap-2 col-2 mx-auto">
+                        <button class="btn btn-secondary btn-lg">Refrescar</button>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text" name="biciActual" value="${sessionScope.valores.get(2)}" disabled>
-                </div>
-            </div>
-            <div class="row m-4">
-                <div class="d-grid gap-2 col-2 mx-auto">
-                    <button class="btn btn-secondary btn-lg">Refrescar</button>
-                </div>
-            </div>
+         
         </form>
             
             <div class="row">
@@ -77,31 +111,59 @@
             
             
         <form action="SvTarifas" method="POST">
-                
-            <div class="row m-2">
-                <div class="col-md-6 text-end">
-                    <label class="fw-semibold fs-5"> Nueva tarifa Motocicleta</label>
+            <div class="row">
+                <div class="col">
+                    <div class="row m-2">
+                        <div class="col-md-6 text-end">
+                            <label class="fw-semibold fs-5"> Nueva tarifa Motocicleta x hora $</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" name="motoHora" > 
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-6 text-end">
+                            <label class="fw-semibold fs-5"> Nueva tarifa Automovil x hora $</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" name="autoHora" >
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-6 text-end">
+                            <label class="fw-semibold fs-5"> Nueva tarifa Bicicleta x hora $</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" name="biciHora" >
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text" name="motoNueva" >
+                <div class="col">
+                    <div class="row m-2">
+                        <div class="col-md-6 text-end">
+                            <label class="fw-semibold fs-5"> Nueva tarifa Motocicleta x dia $</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" name="motoDia" > 
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-6 text-end">
+                            <label class="fw-semibold fs-5"> Nueva tarifa Automovil x dia $</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" name="autoDia" >
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-6 text-end">
+                            <label class="fw-semibold fs-5"> Nueva tarifa Bicicleta x dia $</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input class="form-control" type="text" name="biciDia" >
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row m-2">
-                <div class="col-md-6 text-end">
-                    <label class="fw-semibold fs-5"> Nueva tarifa Automovil</label>
-                </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text" name="autoNueva" >
-                </div>
-            </div>
-            <div class="row m-2">
-                <div class="col-md-6 text-end">
-                    <label class="fw-semibold fs-5"> Nueva tarifa Bicicleta</label>
-                </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text" name="biciNueva" >
-                </div>
-            </div>
             <div class="row m-4">
                 <div class="d-grid gap-2 col-2 mx-auto">
                     <button class="btn btn-secondary btn-lg">Modificar</button>

@@ -4,8 +4,8 @@
  */
 package com.fabian.senapractica.rparksoft.controller;
 
-import com.fabian.senapractica.rparksoft.model.EntityTarifas;
-import com.fabian.senapractica.rparksoft.model.JpaUtil;
+import com.fabian.senapractica.rparksoft.modelAnterior.EntityTarifas;
+import com.fabian.senapractica.rparksoft.modelAnterior.JpaUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import java.util.ArrayList;

@@ -27,7 +27,7 @@
             </div>
         </div>
             
-            <form action="SvMembresias" method="POST">
+            <form action="SvVehiculos" method="POST">
                 
             <div class="row m-2">
                 <div class="col">
@@ -99,13 +99,11 @@
                             </div>        
                         </div>                 
                     </div>
-                </div>
-            </div>
-            <div class="row m-2">
-                <div class="col-md-5 offset-md-1">
+                    <div class="row m-3">
+                        <div class="col-md-5 offset-md-1">
                             <div class="row m-2">
                                 <div class="col">
-                                    <label class="fw-semibold fs-5">Identificacion usuario</label>
+                                    <label class="fw-semibold fs-5">Identificacion propietario</label>
                                 </div>
                             </div>
                             <div class="row m-2">
@@ -113,8 +111,11 @@
                                     <input class="form-control" type="text" name="idUsuario">   
                                 </div>    
                             </div>                     
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="row m-5">
                 <div class="col-md-2 offset-md-5 d-grid gap-5 align-self-center">
                     <button class="btn btn-secondary btn-lg">Guardar</button>

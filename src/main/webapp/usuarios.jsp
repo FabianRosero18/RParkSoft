@@ -27,7 +27,7 @@
             </div>
         </div>
             
-            <form action="SvMembresias" method="POST">
+            <form action="SvUsuarios" method="POST">
                 
             <div class="row m-2">
                 <div class="col">
@@ -38,7 +38,6 @@
             <br>
             <div class="row m-2">
                 <div class="col-md-11">
-
                     <div class="row m-3">
 
                         <div class="col-md-5 offset-md-1">
@@ -95,6 +94,26 @@
                             </div>        
                         </div>                 
                     </div>
+                    <div class="row m-3">
+                        <div class="col-md-5 offset-md-1">
+                            <div class="row m-2">
+                                <div class="col">
+                                    <label class="fw-semibold fs-5">Membresia mensual</label>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col">
+                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="membresia" id="btnradio1" value="true" autocomplete="off" >
+                                    <label class="btn btn-outline-dark fw-bold bg-info w-50" for="btnradio1">SI</label>
+
+                                    <input type="radio" class="btn-check" name="membresia" id="btnradio2" value="false" autocomplete="off" checked>
+                                    <label class="btn btn-outline-dark fw-bold bg-info w-50" for="btnradio2">NO</label>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>   
+                    </div>    
                 </div>
             </div>
             <div class="row m-5">
@@ -103,10 +122,7 @@
                 </div>
             </div>
         </form>
-            
-            
-            <br>
-
+        <br>
     </body>
 </html>
 

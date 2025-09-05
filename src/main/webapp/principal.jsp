@@ -26,37 +26,22 @@
 
         <form id="formIngresoRetiro" action="SvPrincipal" method="POST">
             
-            
-            <div class="row m-2">                
-                <div class="col-md-3 text-rignt ms-5">
-                <label class="fs-1 fw-bold fst-italic">Tipo de vehiculo</label>
+           
+            <div class="row m-5">
+                <div class="col-md-4 text-end ms-1">
+                    <label class="fs-3 fw-bold fst-italic">Placa o cedula (en caso de bicicleta)</label>
+                </div>    
+                <div class="col-md-5 ms-3">
+                    <input class="form-control" type="text" name="placa">
                 </div>
-                
-                <div class="col-md-5">
-                    <select class="form-select" id="floatingSelect" aria-label="Elija uno" name="tipoVehiculo">
-                    <option value="Motocicleta">Motocicleta</option>
-                    <option value="Automovil">Automovil</option>
-                    <option value="Bicicleta">Bicicleta</option>
-                    </select>
-                </div>
-                <div class="col-md-3 d-flex justify-content-center">
+                <div class="col-md-2 d-flex justify-content-center">
                         <!--se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
                             salida o entrada-->
                         <button type="submit" name="accion" value="ingreso" class="btn btn-secondary btn-lg">Ingreso</button>
                 </div>
             </div>
             
-            <div class="row m-2">
-                <div class="col-md-3 text-start ms-5">
-                    <label class="fs-1 fw-bold fst-italic">Placa</label>
-                </div>    
-                <div class="col-md-5">
-                    <input class="form-control" type="text" name="placa">
-                </div>
-               
-            </div>
-            
-            <div class="row">
+            <div class="row m-5">
                 <div class="col">
                     <hr class="border border-secondary border-3 opacity-75">
                 </div>
@@ -88,10 +73,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
-
         </form>
         
-        <div class="row">
+        <div class="row m-5">
             <div class="col">
                 <hr class="border border-secondary border-3 opacity-75">
             </div>
