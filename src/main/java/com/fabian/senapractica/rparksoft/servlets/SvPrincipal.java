@@ -6,6 +6,7 @@ package com.fabian.senapractica.rparksoft.servlets;
 
 import com.fabian.senapractica.rparksoft.controller.CtrlPrincipal;
 import com.fabian.senapractica.rparksoft.modelAnterior.EntityPrincipal;
+import com.fabian.senapractica.rparksoft.service.PrincipalService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -62,14 +63,14 @@ public class SvPrincipal extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        String  tipo = request.getParameter("tipoVehiculo");
-        String  placa = request.getParameter("placa");
+        String  idVehiculo = request.getParameter("idVehiculo");
+        String  idSalida = request.getParameter("idSalida");
         String  accion = request.getParameter("accion");
-        String  numeroFactura = request.getParameter("numeroSalida");
-        String  placaSalida = request.getParameter("placaSalida");
                 
-        CtrlPrincipal p = new CtrlPrincipal(tipo,placa,accion,numeroFactura,placaSalida);
-        p.accion();
+        //CtrlPrincipal p = new CtrlPrincipal(idIngreso,idSalida,accion);
+        //p.accion();
+        PrincipalService principal = new PrincipalService(idVehiculo, idSalida, accion);
+        principal.validarAccion();
         
         //ademas de session, otra manera de pasar atributos al JSP es mediante request, se hace asi:
         request.setAttribute("valorPagar", p.getValorPagar());

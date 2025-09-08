@@ -5,6 +5,7 @@
 package com.fabian.senapractica.rparksoft.servlets;
 
 import com.fabian.senapractica.rparksoft.controller.CtrlTarifas;
+import com.fabian.senapractica.rparksoft.service.TarifaService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -34,14 +36,13 @@ public class SvTarifas extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        CtrlTarifas tarifas = new CtrlTarifas();
-        tarifas.consultarTarifas();
-        ArrayList<Integer> valores = tarifas.getValor();
+        TarifaService tarifas = new TarifaService();
+        tarifas.listarTarifas();
         
         HttpSession session = request.getSession();
-        session.setAttribute("valores", valores);
-        
+        session.setAttribute("precios", tarifas.precios());
         response.sendRedirect("tarifas.jsp");
+        
     }
 
 
@@ -50,15 +51,20 @@ public class SvTarifas extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        var tarifaMotocicleta = request.getParameter("motoNueva");
-        var tarifaAutomovil = request.getParameter("autoNueva");
-        var tarifaBicicleta = request.getParameter("biciNueva");
+        List<Integer> precios = new ArrayList<>();
         
-        CtrlTarifas tarifas = new CtrlTarifas();
-        tarifas.setTarifaMotocicleta(tarifaMotocicleta);
-        tarifas.setTarifaAutomovil(tarifaAutomovil);
-        tarifas.setTarifaBicicleta(tarifaBicicleta);
-        tarifas.validarTarifaActualizar();
+        precios.add(Integer.valueOf(request.getParameter("motoHora")));
+        precios.add(Integer.valueOf(request.getParameter("autoHora")));
+        precios.add(Integer.valueOf(request.getParameter("biciHora")));
+        precios.add(Integer.valueOf(request.getParameter("motoDia")));
+        precios.add(Integer.valueOf(request.getParameter("autoDia")));
+        precios.add(Integer.valueOf(request.getParameter("biciDia")));
+        precios.add(Integer.valueOf(request.getParameter("motoMensual")));
+        precios.add(Integer.valueOf(request.getParameter("autoMensual")));
+        precios.add(Integer.valueOf(request.getParameter("biciMensual")));
+        
+        TarifaService tarifas = new TarifaService();
+        tarifas.setPrecios(precios);
         
         response.sendRedirect("tarifas.jsp");
 

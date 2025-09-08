@@ -44,7 +44,7 @@
                         <div class="col-md-5 offset-md-1">
                             <div class="row m-2">
                                 <div class="col">
-                                    <label class="fw-semibold fs-5">Placa</label>
+                                    <label class="fw-semibold fs-5">Placa o Codigo (Bicicleta)</label>
                                 </div>
                             </div>    
                             <div class="row m-2">    

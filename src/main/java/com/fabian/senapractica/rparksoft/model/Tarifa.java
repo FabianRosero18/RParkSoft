@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.fabian.senapractica.rparksoft.model;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -15,10 +16,30 @@ import jakarta.persistence.Table;
 @Table(name = "tarifas")
 public class Tarifa {
     @Id
+    private String id;
+    @Column(name = "descripcion_por_vehiculo")
+    private String descripcion;
     private String tipo;
-    private Integer valor;
+    @Column(name = "precio_unitario")
+    private Integer precio;
 
     public Tarifa() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getTipo() {
@@ -29,13 +50,17 @@ public class Tarifa {
         this.tipo = tipo;
     }
 
-    public Integer getValor() {
-        return valor;
+    public Integer getPrecio() {
+        return precio;
     }
 
-    public void setValor(Integer valor) {
-        this.valor = valor;
+    public void setPrecio(Integer precio) {
+        this.precio = precio;
     }
+
+
+
+
     
     
     

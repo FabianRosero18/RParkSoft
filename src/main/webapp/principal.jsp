@@ -26,41 +26,46 @@
 
         <form id="formIngresoRetiro" action="SvPrincipal" method="POST">
             
+            <div class="row m-3">
+                <div class="col">
+                    <label class="fs-1 fw-bold fst-italic">INGRESO</label>    
+                </div>
+            </div>
            
-            <div class="row m-5">
+            <div class="row m-2">
                 <div class="col-md-4 text-end ms-1">
-                    <label class="fs-3 fw-bold fst-italic">Placa o cedula (en caso de bicicleta)</label>
+                    <label class="fs-3 fw-bold fst-italic">Placa o Codigo (bicicleta)</label>
                 </div>    
                 <div class="col-md-5 ms-3">
-                    <input class="form-control" type="text" name="placa">
+                    <input class="form-control" type="text" name="idVehiculo">
                 </div>
-                <div class="col-md-2 d-flex justify-content-center">
+                <div class="d-grid gap-2 col-md-1 mx-auto">
                         <!--se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
                             salida o entrada-->
                         <button type="submit" name="accion" value="ingreso" class="btn btn-secondary btn-lg">Ingreso</button>
                 </div>
             </div>
             
-            <div class="row m-5">
+            <div class="row m-1">
                 <div class="col">
                     <hr class="border border-secondary border-3 opacity-75">
                 </div>
             </div>
+            
+            <div class="row m-3">
+                <div class="col">
+                    <label class="fs-1 fw-bold fst-italic">SALIDA</label>    
+                </div>
+            </div>
 
-            <div class="row m-5">
-                <div class="col-md-2 text-start ms-5">
-                    <label class="fs-3 fw-bold fst-italic">Numero de factura</label>                    
+            <div class="row m-3">
+                <div class="col-md-4 text-end ms-1">
+                    <label class="fs-3 fw-bold fst-italic">Numero de factura o placa</label>
+                </div>    
+                <div class="col-md-5 ms-3">
+                    <input class="form-control" type="text" name="idSalida">
                 </div>
-                <div class="col-md-2">
-                    <input class="form-control" type="text" name="numeroSalida">                
-                </div>
-                <div class="col-md-2 text-start ms-5 text-end">
-                    <label class="fs-3 fw-bold fst-italic">Placa</label>                    
-                </div>
-                <div class="col-md-2">
-                    <input class="form-control justify-content-start" type="text" name="placaSalida">                
-                </div>
-                <div class="col-md-2 d-flex justify-content-end">
+                <div class="d-grid gap-2 col-md-1 mx-auto">
                    <!-- se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
                         salida o entrada-->
                     <button type="submit" name="accion" value="salida" class="btn btn-secondary btn-lg">Salida</button>
@@ -75,7 +80,7 @@
             </c:if>
         </form>
         
-        <div class="row m-5">
+        <div class="row m-1">
             <div class="col">
                 <hr class="border border-secondary border-3 opacity-75">
             </div>
