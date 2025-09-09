@@ -33,6 +33,26 @@ public class TarifaDAO {
         
     }
 
+    
+    public void modificarTarifa(int i){
+        
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            
+            //this.consultarPorVehiculo(tipo,em);
+            //tarifaPorVehiculo.setValor(valor);
+            //em.merge(tarifaPorVehiculo);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            
+        } finally {
+            em.close();
+        }
+
+        
+    }
+
     public ArrayList<Integer> getPrecios() {
         return precios;
     }

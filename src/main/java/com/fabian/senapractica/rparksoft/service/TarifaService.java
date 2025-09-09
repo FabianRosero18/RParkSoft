@@ -15,7 +15,7 @@ import java.util.List;
 public class TarifaService {
     
     private TarifaDAO tarifas;
-    private List<Integer> precios;
+    private List<Integer> precios = new ArrayList<>();
 
     public TarifaService(){
         tarifas = new TarifaDAO();
@@ -23,6 +23,16 @@ public class TarifaService {
 
     public void listarTarifas(){
         tarifas.consultarTarifas();
+    }
+    public void validarTarifasActualizar(){
+        
+        int i = 1;
+        
+        for(int precio : precios){
+            if(precio > 0) tarifas.modificarTarifa(i);
+            i++;
+        }
+        
     }
     
     public ArrayList<Integer> precios(){
