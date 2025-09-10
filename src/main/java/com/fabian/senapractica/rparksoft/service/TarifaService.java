@@ -29,7 +29,7 @@ public class TarifaService {
         int i = 1;
         
         for(int precio : precios){
-            if(precio > 0) tarifas.modificarTarifa(i);
+            if(precio > 0) tarifas.modificarTarifa(i,precio);
             i++;
         }
         

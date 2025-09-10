@@ -15,10 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author COMERCIAL
- */
+
+
 public class CtrlPrincipal {
     
     private String tipo, placa, accion, numeroFactura, placaSalida;
@@ -141,7 +139,7 @@ public class CtrlPrincipal {
                 valorPagar = (int) (horas * 800);
                 break;
         }*/
-        
+       
         CtrlTarifas tarifa = new CtrlTarifas();
         tarifa.consultarPorVehiculo(vehiculo.getTipoVehiculo(), em);
         valorPagar = (int) (horas * tarifa.getTarifaPorVehiculo());

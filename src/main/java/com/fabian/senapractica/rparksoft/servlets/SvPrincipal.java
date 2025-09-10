@@ -4,8 +4,7 @@
  */
 package com.fabian.senapractica.rparksoft.servlets;
 
-import com.fabian.senapractica.rparksoft.controller.CtrlPrincipal;
-import com.fabian.senapractica.rparksoft.modelAnterior.EntityPrincipal;
+//import com.fabian.senapractica.rparksoft.controller.CtrlPrincipal;
 import com.fabian.senapractica.rparksoft.service.PrincipalService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,11 +34,11 @@ public class SvPrincipal extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        CtrlPrincipal p = new CtrlPrincipal();
+        /*CtrlPrincipal p = new CtrlPrincipal();
         p.consulta();
         
         //creamos una lista para pasarla al JSP a traves del atributo de sesion
-        List<EntityPrincipal> registros = p.getRegistros();
+        //List<EntityPrincipal> registros = p.getRegistros();
         
         
         int cantidadCarros = p.cantidadCarros().intValue();
@@ -48,13 +47,13 @@ public class SvPrincipal extends HttpServlet {
         
         //creando un atributo de sesion para pasar los parametros al JSP
         HttpSession session = request.getSession();
-        session.setAttribute("registros", registros);
+        //session.setAttribute("registros", registros);
         session.setAttribute("cantidadCarros", cantidadCarros);
         session.setAttribute("cantidadMotos", cantidadMotos);
         session.setAttribute("cantidadBicicletas", cantidadBicicletas);
         
         response.sendRedirect("principal.jsp");
-        
+        */
     }
 
 
@@ -66,15 +65,15 @@ public class SvPrincipal extends HttpServlet {
         String  idVehiculo = request.getParameter("idVehiculo");
         String  idSalida = request.getParameter("idSalida");
         String  accion = request.getParameter("accion");
-                
+        
         //CtrlPrincipal p = new CtrlPrincipal(idIngreso,idSalida,accion);
         //p.accion();
         PrincipalService principal = new PrincipalService(idVehiculo, idSalida, accion);
         principal.validarAccion();
         
         //ademas de session, otra manera de pasar atributos al JSP es mediante request, se hace asi:
-        request.setAttribute("valorPagar", p.getValorPagar());
-        request.setAttribute("mensajeSalida", p.getMensajeSalida());
+        //request.setAttribute("valorPagar", p.getValorPagar());
+        //request.setAttribute("mensajeSalida", p.getMensajeSalida());
         request.getRequestDispatcher("principal.jsp").forward(request, response);
         
     }

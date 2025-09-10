@@ -45,5 +45,18 @@ public class VehiculoDAO {
         }
     }
     
+    public Vehiculo consultarPorId(String id){
+        try {
+            em.getTransaction().begin();
+            vehiculo = em.find(Vehiculo.class, id);
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return vehiculo;
+    }
+    
     
 }

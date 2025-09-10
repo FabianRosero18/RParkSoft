@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fabian.senapractica.rparksoft.controller;
+/*package com.fabian.senapractica.rparksoft.controller;
 
 import com.fabian.senapractica.rparksoft.modelAnterior.EntityMembresias;
 import com.fabian.senapractica.rparksoft.modelAnterior.EntityPrincipal;
@@ -12,10 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-/**
- *
- * @author COMERCIAL
- */
+
 public class CtrlMembresias {
     
     private Long id;
@@ -171,7 +168,7 @@ public class CtrlMembresias {
         /*Query query = em.createQuery("UPDATE EntityMembresias m SET m.fechaRegistro = :fechaRegistro WHERE m.idCliente = :id")
                 .setParameter("fechaRegistro", fechaHoraActual)
                 .setParameter("id", Long.valueOf(id));*/
-        
+        /*
     }
 
     public Long getDiasRestantes() {
@@ -190,4 +187,4 @@ public class CtrlMembresias {
         return renovacionExitosa;
     }
 
-}
+}*/

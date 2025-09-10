@@ -4,7 +4,7 @@
  */
 package com.fabian.senapractica.rparksoft.servlets;
 
-import com.fabian.senapractica.rparksoft.controller.CtrlMembresias;
+//import com.fabian.senapractica.rparksoft.controller.CtrlMembresias;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -35,7 +35,7 @@ public class SvMembresias extends HttpServlet {
         var id = request.getParameter("id");
         var accion = request.getParameter("accion");
                 
-        CtrlMembresias membresias = new CtrlMembresias();
+        /*CtrlMembresias membresias = new CtrlMembresias();
         membresias.validarAccion(id, accion);
         
         int diasRestantes = membresias.getDiasRestantes().intValue();
@@ -51,7 +51,7 @@ public class SvMembresias extends HttpServlet {
         session.setAttribute("id", id);
         
         response.sendRedirect("membresias.jsp");
-        
+        */
     }
 
 
@@ -68,7 +68,7 @@ public class SvMembresias extends HttpServlet {
         var telefono = request.getParameter("telefono");
         var direccion = request.getParameter("direccion");
         
-        CtrlMembresias membresias = new CtrlMembresias(id,
+        /*CtrlMembresias membresias = new CtrlMembresias(id,
                                                         nombre,
                                                         apellido,
                                                         tipoVehiculo,
@@ -76,7 +76,7 @@ public class SvMembresias extends HttpServlet {
                                                         telefono,
                                                         direccion);
         
-        membresias.insertarMembresia();
+        membresias.insertarMembresia();*/
         
         response.sendRedirect("membresias.jsp");
         

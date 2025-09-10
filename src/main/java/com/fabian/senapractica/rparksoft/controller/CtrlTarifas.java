@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.fabian.senapractica.rparksoft.controller;
+/*package com.fabian.senapractica.rparksoft.controller;
 
 import com.fabian.senapractica.rparksoft.modelAnterior.EntityTarifas;
 import com.fabian.senapractica.rparksoft.modelAnterior.JpaUtil;
@@ -67,7 +67,7 @@ public class CtrlTarifas {
     /*  los siguientes set reciben un String, pero deben convertirlos a int, ya que el servlet desde el que se envian
         capturo los valores de un input de JSP, y se valida si esta vacio, en dicho caso se asigna un 0 
     */
-    
+    /*
     public void setTarifaMotocicleta(String tarifaMotocicleta) {
         if(tarifaMotocicleta.isEmpty())
             this.tarifaMotocicleta = 0;
@@ -100,4 +100,4 @@ public class CtrlTarifas {
     
     
 
-}
+}*/

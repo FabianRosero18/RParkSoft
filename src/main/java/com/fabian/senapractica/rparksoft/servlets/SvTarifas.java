@@ -4,7 +4,6 @@
  */
 package com.fabian.senapractica.rparksoft.servlets;
 
-import com.fabian.senapractica.rparksoft.controller.CtrlTarifas;
 import com.fabian.senapractica.rparksoft.service.TarifaService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

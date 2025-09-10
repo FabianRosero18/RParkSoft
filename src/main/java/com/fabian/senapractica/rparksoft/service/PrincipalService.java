@@ -4,6 +4,8 @@
  */
 package com.fabian.senapractica.rparksoft.service;
 
+import com.fabian.senapractica.rparksoft.dao.FacturaDAO;
+import com.fabian.senapractica.rparksoft.dao.ServicioDAO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 public class PrincipalService {
     
     private String idVehiculo,idSalida,accion;
+    private FacturaDAO factura;
+    private ServicioDAO servicio;
 
     public PrincipalService(String idVehiculo, String idSalida, String accion) {
         this.idVehiculo = idVehiculo;
@@ -31,6 +35,13 @@ public class PrincipalService {
     }
     
     private void ingreso(){
+        
+        factura = new FacturaDAO();
+        servicio = new ServicioDAO();
+        
+        servicio.insertarServicio(idVehiculo);
+        
+       
         
     }
     

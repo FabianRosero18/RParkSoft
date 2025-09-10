@@ -8,10 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-/**
- *
- * @author COMERCIAL
- */
+
 @Entity
 @Table(name = "tarifas")
 public class Tarifa {
