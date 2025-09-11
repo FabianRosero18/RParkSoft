@@ -10,4 +10,8 @@ package com.fabian.senapractica.rparksoft.dao;
  */
 public class FacturaDAO{
     
+    public void insertarFactura(){
+        
+    }
+    
 }

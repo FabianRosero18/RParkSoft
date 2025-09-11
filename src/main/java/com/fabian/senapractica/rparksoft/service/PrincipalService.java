@@ -23,6 +23,7 @@ public class PrincipalService {
         this.idVehiculo = idVehiculo;
         this.idSalida = idSalida;
         this.accion = accion;
+        servicio = new ServicioDAO();
     }
     
     public void validarAccion(){
@@ -30,21 +31,21 @@ public class PrincipalService {
         if(accion.equals("ingreso")){
             this.ingreso();
         }else if( accion.equals("salida")){
-            //this.validarSalida();
+            this.validarSalida();
         }
     }
     
     private void ingreso(){
         
-        factura = new FacturaDAO();
-        servicio = new ServicioDAO();
-        
-        servicio.insertarServicio(idVehiculo);
-        
-       
+        servicio.insertarServicio(idVehiculo,fechaHora());
         
     }
     
+    private void validarSalida(){
+        
+        servicio.consultarPorId(Integer.parseInt(idSalida));
+        
+    }
     
     private String fechaHora(){
         

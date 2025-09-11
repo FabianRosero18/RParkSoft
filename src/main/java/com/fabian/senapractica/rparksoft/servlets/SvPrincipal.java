@@ -66,8 +66,6 @@ public class SvPrincipal extends HttpServlet {
         String  idSalida = request.getParameter("idSalida");
         String  accion = request.getParameter("accion");
         
-        //CtrlPrincipal p = new CtrlPrincipal(idIngreso,idSalida,accion);
-        //p.accion();
         PrincipalService principal = new PrincipalService(idVehiculo, idSalida, accion);
         principal.validarAccion();
         

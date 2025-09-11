@@ -18,22 +18,37 @@ public class ServicioDAO {
     private EntityManager em;
     private VehiculoDAO vehiculo;
     private TarifaDAO tarifa;
+
+    public ServicioDAO() {
+        this.em = JpaUtil.getEntityManager();
+    }
     
-    public void insertarServicio(String idVehiculo){
+    public void insertarServicio(String idVehiculo, String fechaHora){
         
-        em = JpaUtil.getEntityManager();
         vehiculo = new VehiculoDAO();
         
         try {
            em.getTransaction().begin();
            servicio.setVehiculo(vehiculo.consultarPorId(idVehiculo));
-           
+           servicio.setFechaHoraIgreso(fechaHora);
         } catch (Exception e) {
+            em.getTransaction().rollback();
         } finally {
+            em.close();
         }
-        //servicio.set
         
     }
-    
-    
+    public Boolean consultarPorId(int idSalida){
+        
+        try {
+            em.getTransaction().begin();
+            servicio = em.find(Servicio.class, idSalida);
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+        //retorna true o false dependiendo si encontro algo o no
+        return servicio != null;
+    }
 }
