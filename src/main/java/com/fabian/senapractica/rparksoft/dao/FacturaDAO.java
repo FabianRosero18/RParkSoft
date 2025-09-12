@@ -10,8 +10,13 @@ package com.fabian.senapractica.rparksoft.dao;
  */
 public class FacturaDAO{
     
-    public void insertarFactura(){
-        
+
+    public FacturaDAO() {
+    }
+    
+    public void insertarFactura(String fechaHora){
+        ServicioDAO servicio = new ServicioDAO();
+
     }
     
 }

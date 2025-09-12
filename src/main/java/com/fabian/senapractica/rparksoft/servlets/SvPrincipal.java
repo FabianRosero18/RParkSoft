@@ -62,11 +62,12 @@ public class SvPrincipal extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        String  idVehiculo = request.getParameter("idVehiculo");
-        String  idSalida = request.getParameter("idSalida");
-        String  accion = request.getParameter("accion");
+        String idVehiculo = request.getParameter("idVehiculo");
+        String tipoTarifa = request.getParameter("tipoTarifa");
+        String idSalida = request.getParameter("idSalida");
+        String accion = request.getParameter("accion");
         
-        PrincipalService principal = new PrincipalService(idVehiculo, idSalida, accion);
+        PrincipalService principal = new PrincipalService(idVehiculo, tipoTarifa, idSalida, accion);
         principal.validarAccion();
         
         //ademas de session, otra manera de pasar atributos al JSP es mediante request, se hace asi:

@@ -21,7 +21,6 @@ public class TarifaDAO {
 
     public void consultarTarifas(){
         
-        EntityManager em = JpaUtil.getEntityManager();
         em.getTransaction().begin();
         Query query = em.createQuery("select t from EntityTarifas t",Tarifa.class);
         tarifas = query.getResultList();        
@@ -31,7 +30,18 @@ public class TarifaDAO {
             precios.add(tarifa.getPrecio());
         }
     }
-
+    public Tarifa consultarPorVehiculoTipo(String tipoVehiculo, String tipoTarifa){
+        
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            tarifa = em.createQuery("select t from Tarifa t where t.descripcion =:tipoVehiculo and t.tipo =:tipoTarifa",Tarifa.class)
+                    .setParameter("tipoVehiculo", tipoVehiculo)
+                    .setParameter("tipoTarifa", tipoTarifa)
+                    .getSingleResult();
+        } catch (Exception e) {
+        } finally {
+        }
+    }
     
     public void modificarTarifa(int i,int precio){
         

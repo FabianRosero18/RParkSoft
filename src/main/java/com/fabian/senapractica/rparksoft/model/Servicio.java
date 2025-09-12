@@ -27,6 +27,10 @@ public class Servicio {
     //se debe unir al nombre de la columna de la tabla 
     @JoinColumn(name="id_vehiculo")
     private Vehiculo vehiculo;
+    @ManyToOne
+    //se debe unir al nombre de la columna de la tabla 
+    @JoinColumn(name="id_tarifa")
+    private Tarifa tarifa;
     @Column(name = "fecha_hora_ingreso")
     private String fechaHoraIgreso;
 
@@ -45,6 +49,14 @@ public class Servicio {
         return vehiculo;
     }
 
+    public Tarifa getTarifa() {
+        return tarifa;
+    }
+
+    public void setTarifa(Tarifa tarifa) {
+        this.tarifa = tarifa;
+    }
+
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
@@ -56,8 +68,5 @@ public class Servicio {
     public void setFechaHoraIgreso(String fechaHoraIgreso) {
         this.fechaHoraIgreso = fechaHoraIgreso;
     }
-    
-    
-    
-    
+
 }
