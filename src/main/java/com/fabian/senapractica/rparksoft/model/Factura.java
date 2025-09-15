@@ -18,10 +18,7 @@ import jakarta.persistence.ManyToOne;
 public class Factura {
     
     @Id
-    //esta anotacion indica que es autoincremental
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //IMPORTANTE, si es autoincremental, se debe inicializar, y es preferible que sea tipo Long
-    private Long id = 1L;
+    private Long id;
     //esta anotacion indica una relacion de muchos a uno, y que su llave foranea sera el id del usuario    
     @ManyToOne
     //se debe unir al nombre de la columna de la tabla 
@@ -35,7 +32,7 @@ public class Factura {
     @Column(name = "fecha_hora_salida")
     private String fechaHoraSalida;
     @Column(name = "valor_pagar")
-    private String ValorPagar;
+    private Integer ValorPagar;
 
     public Factura() {
     }
@@ -80,11 +77,11 @@ public class Factura {
         this.fechaHoraSalida = fechaHoraSalida;
     }
 
-    public String getValorPagar() {
+    public Integer getValorPagar() {
         return ValorPagar;
     }
 
-    public void setValorPagar(String ValorPagar) {
+    public void setValorPagar(Integer ValorPagar) {
         this.ValorPagar = ValorPagar;
     }
     

@@ -6,8 +6,11 @@ package com.fabian.senapractica.rparksoft.dao;
 
 import com.fabian.senapractica.rparksoft.model.JpaUtil;
 import com.fabian.senapractica.rparksoft.model.Servicio;
+import com.fabian.senapractica.rparksoft.model.Tarifa;
 import com.fabian.senapractica.rparksoft.model.Vehiculo;
 import jakarta.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,6 +19,7 @@ import jakarta.persistence.EntityManager;
 public class ServicioDAO {
     
     private Servicio servicio;
+    private List<Servicio> servicios;
     private EntityManager em;
     private VehiculoDAO vehiculoDAO;
     private TarifaDAO tarifaDAO;
@@ -25,17 +29,25 @@ public class ServicioDAO {
         this.em = JpaUtil.getEntityManager();
     }
     
-    public void insertarServicio(String idVehiculo, String fechaHora, String tipoTarifa){
+    public void consultarServicios(){
         
-        vehiculoDAO = new VehiculoDAO();
-        tarifaDAO = new TarifaDAO();
+        servicios = new ArrayList<>();
+        servicios = em.createQuery("select s from Servicio s",Servicio.class)
+               .    getResultList();
         
+       
+    }
+    
+    public void insertarServicio(Vehiculo vehiculo, Tarifa tarifa, String fechaHora){
+
         try {
            em.getTransaction().begin();
-           Vehiculo vehiculo = vehiculoDAO.consultarPorId(idVehiculo);
            servicio.setVehiculo(vehiculo);
-           servicio.setTarifa(tarifaDAO.consultarPorVehiculoTipo(vehiculo.getTipo(),tipoTarifa));
+           servicio.setTarifa(tarifa);
            servicio.setFechaHoraIgreso(fechaHora);
+           em.persist(servicio);
+           em.getTransaction().commit();
+           
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {
@@ -57,11 +69,7 @@ public class ServicioDAO {
         }
     }
     
-    public void consultarPorVehiculo(String idSalida){
-        
-        vehiculoDAO = new VehiculoDAO();
-        Vehiculo vehiculo = vehiculoDAO.consultarPorId(idSalida);   
-        
+    public void consultarPorVehiculo(Vehiculo vehiculo){
         
         try {
             //Typedquery<Servicio> le dice al sistema que el query obtenido sera del tipo Servicio, no del tipo Objeto generico
@@ -74,9 +82,17 @@ public class ServicioDAO {
         }
     }
     public void eliminarServicio(){
-        em.remove(servicio);
-        em.getTransaction().commit();
-        em.close();
+    
+        try {
+            em.remove(servicio);
+            em.getTransaction().commit();
+  
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        }
+        finally{
+            em.close();
+        }
     }
     
     public String fechaHoraIngresoVehiculo(){
@@ -87,8 +103,16 @@ public class ServicioDAO {
         return validacionId;
     }
 
+    public List<Servicio> getServicios() {
+        return servicios;
+    }
+
     public Servicio getServicio() {
         return servicio;
+    }
+    //un getter de entitymanager para poder usarlo en FacturaDAO y aprovechar que estamos usando la misma peticion
+    public EntityManager getEm() {
+        return em;
     }
     
     

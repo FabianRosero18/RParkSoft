@@ -125,7 +125,7 @@ public class CtrlPrincipal {
         em.getTransaction().commit();
         em.close();
     }
-    
+
     public void calcularTarifa(long horas){
         
         /*switch (vehiculo.getTipoVehiculo()) {

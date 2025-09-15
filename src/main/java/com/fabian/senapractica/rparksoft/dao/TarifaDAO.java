@@ -20,7 +20,8 @@ public class TarifaDAO {
     private ArrayList<Integer> precios = new ArrayList<>();
 
     public void consultarTarifas(){
-        
+        EntityManager em = JpaUtil.getEntityManager();
+
         em.getTransaction().begin();
         Query query = em.createQuery("select t from EntityTarifas t",Tarifa.class);
         tarifas = query.getResultList();        
@@ -39,8 +40,9 @@ public class TarifaDAO {
                     .setParameter("tipoTarifa", tipoTarifa)
                     .getSingleResult();
         } catch (Exception e) {
-        } finally {
-        }
+            e.printStackTrace();
+        } 
+        return tarifa;
     }
     
     public void modificarTarifa(int i,int precio){
@@ -53,17 +55,14 @@ public class TarifaDAO {
             em.merge(tarifa);
             em.getTransaction().commit();
         } catch (Exception e) {
-            
+            em.getTransaction().rollback();
         } finally {
             em.close();
         }
-
     }
 
-    public ArrayList<Integer> getPrecios() {
+    public ArrayList<Integer> getPrecios(){
         return precios;
     }
-    
-    
 
 }

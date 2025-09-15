@@ -5,6 +5,7 @@
 package com.fabian.senapractica.rparksoft.servlets;
 
 //import com.fabian.senapractica.rparksoft.controller.CtrlPrincipal;
+import com.fabian.senapractica.rparksoft.model.Servicio;
 import com.fabian.senapractica.rparksoft.service.PrincipalService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,6 +34,9 @@ public class SvPrincipal extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        PrincipalService principal = new PrincipalService();
+        List<Servicio> servicios = principal.listarServicios();
         
         /*CtrlPrincipal p = new CtrlPrincipal();
         p.consulta();
@@ -71,8 +75,8 @@ public class SvPrincipal extends HttpServlet {
         principal.validarAccion();
         
         //ademas de session, otra manera de pasar atributos al JSP es mediante request, se hace asi:
-        //request.setAttribute("valorPagar", p.getValorPagar());
-        //request.setAttribute("mensajeSalida", p.getMensajeSalida());
+        request.setAttribute("valorPagar", principal.getValorPagar());
+        request.setAttribute("mensajeSalida", principal.getMensajeSalidaExitoso());
         request.getRequestDispatcher("principal.jsp").forward(request, response);
         
     }

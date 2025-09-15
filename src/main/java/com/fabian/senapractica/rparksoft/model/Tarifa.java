@@ -13,7 +13,8 @@ import jakarta.persistence.Table;
 @Table(name = "tarifas")
 public class Tarifa {
     @Id
-    private String id;
+    private Integer id;
+    private String codigo;
     @Column(name = "descripcion_por_vehiculo")
     private String descripcion;
     private String tipo;
@@ -23,12 +24,20 @@ public class Tarifa {
     public Tarifa() {
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getDescripcion() {

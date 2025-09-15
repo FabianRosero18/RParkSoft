@@ -6,9 +6,13 @@ package com.fabian.senapractica.rparksoft.service;
 
 import com.fabian.senapractica.rparksoft.dao.FacturaDAO;
 import com.fabian.senapractica.rparksoft.dao.ServicioDAO;
+import com.fabian.senapractica.rparksoft.dao.TarifaDAO;
+import com.fabian.senapractica.rparksoft.dao.VehiculoDAO;
+import com.fabian.senapractica.rparksoft.model.Servicio;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  *
@@ -17,51 +21,81 @@ import java.time.format.DateTimeFormatter;
 public class PrincipalService {
     
     private String idVehiculo,tipoTarifa,idSalida,accion;
+    private int valorPagar;
+    private long horas;
+    private Boolean mensajeSalidaExitoso = false;
     private FacturaDAO factura;
     private ServicioDAO servicio;
+    private VehiculoDAO vehiculo;
+    private TarifaDAO tarifa;
     private DateTimeFormatter formatter;
 
-    public PrincipalService(String idVehiculo, String tipoTarifa, String idSalida, String accion) {
-        this.idVehiculo = idVehiculo;
-        this.tipoTarifa = tipoTarifa;
-        this.idSalida = idSalida;
-        this.accion = accion;
+     public PrincipalService(){
         servicio = new ServicioDAO();
     }
     
+    public PrincipalService(String idVehiculo, String tipoTarifa, String idSalida, String accion) {
+        this();
+        this.idVehiculo = idVehiculo;
+        this.tipoTarifa = tipoTarifa;
+        this.idSalida = idSalida;
+        this.accion = accion;        
+    }
+    
+    public List<Servicio> listarServicios(){
+        
+        servicio.consultarServicios();
+        List<Servicio> servicios = servicio.getServicios();
+        return servicios;
+    }
+
     public void validarAccion(){
         
         if(accion.equals("ingreso")){
             this.realizarIngreso();
         }else if( accion.equals("salida")){
-            this.RealizarSalida();
-            this.ingresarFactura();
+            this.realizarSalida();
         }
     }
     
     private void realizarIngreso(){
         
-        servicio.insertarServicio(idVehiculo,fechaHora(),tipoTarifa);
+        vehiculo = new VehiculoDAO();
+        tarifa = new TarifaDAO();
+        //vehiculoServicio = vehiculo.consultarPorId(idVehiculo)
+        
+        servicio.insertarServicio(
+                vehiculo.consultarPorId(idVehiculo),
+                tarifa.consultarPorVehiculoTipo(vehiculo.consultarPorId(idVehiculo).getTipo(),tipoTarifa),
+                fechaHora()
+        );
     }
     
-    private void RealizarSalida(){
+    private void realizarSalida(){
         
         servicio.consultarPorId(Integer.parseInt(idSalida));
-        
-        //esta condicional es obtenida desde el DAO, indica que si no se encontro un servicio por el ID se procede a buscar por el vehiculo ingresado (Id del vehiculo)
+        /*esta condicional es obtenida desde el DAO, indica que si no se encontro un servicio por el ID se procede a buscar por el vehiculo, asumiento que la ID
+        ingresada es entonces el del vehiculo*/
         if(servicio.isValidacionId() == false){
-            servicio.consultarPorVehiculo(idSalida);
+            
+            vehiculo = new VehiculoDAO();
+            servicio.consultarPorVehiculo(vehiculo.consultarPorId(idSalida));
         }
         
         this.ingresarFactura();
         servicio.eliminarServicio();
         
+        if(servicio.getServicio() == null){
+            mensajeSalidaExitoso = Boolean.TRUE;
+        }
     }
     
     private void ingresarFactura(){
-        
+       
+        this.calcularTiempoTranscurrido();
         factura = new FacturaDAO();
-        factura.insertarFactura(this.fechaHora());
+        
+        factura.insertarFactura(servicio.getServicio(),this.fechaHora(),valorPagar);
         
     }
     
@@ -72,15 +106,33 @@ public class PrincipalService {
         //con la clase Duration podemos obtener el tiempo transcurrido entre la entrada y salida del vehiculo
         Duration duracion = Duration.between(fechaIngresoParking,LocalDateTime.now());
         
-        long horas = duracion.toHours();
+        //obtenemos con las respectivas funciones las horas y los minutos transcurridos (minutos sobrantes de las horas, modulo de 60)
+        horas = duracion.toHours();
         long minutos= duracion.toMinutes()%60;
+        
+        if(minutos > 0){
+            horas += 1;
+        }
+        this.calcularTarifa();
     }
-    
+    private void calcularTarifa(){
+                
+        valorPagar = (int) (servicio.getServicio().getTarifa().getPrecio() * horas);
+        
+    }
     private String fechaHora(){
         
         LocalDateTime actual = LocalDateTime.now();
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return actual.format(formatter);
+    }
+
+    public Boolean getMensajeSalidaExitoso() {
+        return mensajeSalidaExitoso;
+    }
+    
+    public int getValorPagar() {
+        return valorPagar;
     }
     
 }
