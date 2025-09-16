@@ -36,12 +36,20 @@ public class SvPrincipal extends HttpServlet {
         processRequest(request, response);
         
         PrincipalService principal = new PrincipalService();
+        //creamos una lista para pasarla al JSP a traves del atributo de sesion
         List<Servicio> servicios = principal.listarServicios();
+        
+        principal.contarVehiculosPorTipo();
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("registros", servicios);
+        session.setAttribute("cantidadCarros", principal.getCantidadAutos());
+        session.setAttribute("cantidadMotos", principal.getCantidadMotos());
+        session.setAttribute("cantidadBicicletas", principal.getCantidadBicis());
         
         /*CtrlPrincipal p = new CtrlPrincipal();
         p.consulta();
         
-        //creamos una lista para pasarla al JSP a traves del atributo de sesion
         //List<EntityPrincipal> registros = p.getRegistros();
         
         
@@ -76,7 +84,11 @@ public class SvPrincipal extends HttpServlet {
         
         //ademas de session, otra manera de pasar atributos al JSP es mediante request, se hace asi:
         request.setAttribute("valorPagar", principal.getValorPagar());
-        request.setAttribute("mensajeSalida", principal.getMensajeSalidaExitoso());
+        request.setAttribute("ingresoExitoso", principal.getIngresoExitoso());
+        request.setAttribute("membresiaVencida", principal.getMembresiaVencida());
+        request.setAttribute("renovacionExitosa", principal.getRenovacionExitosa());
+        request.setAttribute("SalidaExitosa", principal.getSalidaExitoso());
+        request.setAttribute("idVehiculo", idVehiculo);
         request.getRequestDispatcher("principal.jsp").forward(request, response);
         
     }

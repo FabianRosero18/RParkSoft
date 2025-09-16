@@ -7,6 +7,7 @@ package com.fabian.senapractica.rparksoft.dao;
 
 import com.fabian.senapractica.rparksoft.model.JpaUtil;
 import com.fabian.senapractica.rparksoft.model.Usuario;
+import com.fabian.senapractica.rparksoft.model.Vehiculo;
 import jakarta.persistence.EntityManager;
 
 /**
@@ -57,4 +58,27 @@ public class UsuarioDAO {
         }
         return usuario;
     }
+    
+    public static boolean actualizarFechaHoraMembresia(Vehiculo vehiculo, String fechaHoraActual){
+       
+        Boolean renovacion = Boolean.FALSE;
+        EntityManager em = JpaUtil.getEntityManager();        
+
+        try {
+            em.getTransaction().begin();
+            Usuario usuario = em.find(Usuario.class, vehiculo.getUsuario().getId());
+            usuario.setFechaHoraMembresia(fechaHoraActual);
+            em.merge(usuario);
+            em.getTransaction().commit();
+            renovacion = Boolean.TRUE;
+            
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+        
+        return renovacion;
+    }
+
 }

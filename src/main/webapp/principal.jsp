@@ -37,7 +37,7 @@
                     <label class="fs-3 fw-bold fst-italic">Placa o Codigo (bicicleta)</label>
                 </div>    
                 <div class="col-md-5 ms-3">
-                    <input class="form-control" type="text" name="idVehiculo">
+                    <input class="form-control" type="text" name="idVehiculo" id="id">
                 </div>
                 <div class="d-grid gap-2 col-md-1 mx-auto">
                         <!--se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
@@ -46,6 +46,47 @@
                 </div>
             </div>
             
+            <c:if test="${ingresoExitoso}">
+                <div class="row">
+                    <div class="col">                    
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <p class="fs-3">Cliente ingresado al parqueadero, no olvide refrescar el listado</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>    
+            </c:if>
+            
+            <c:if test="${membresiaVencida}">
+                <script>
+                    document.getElementById("id").value = "${idVehiculo}";
+                </script>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <p class="fs-3">Cliente con vigencia vencida, debe renovarse</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="col-md-1 d-grid gap-5 align-self-center">
+                        <!-- se coloca el mismo name a los botones de ingreso, salida y renovacion (accion) ya que en el servlet el campo tomara el value del boton oprimido, 
+                        en este caso sera para renovacion de membresia-->
+                        <button class="btn btn-secondary btn-lg" name="accion" value="renovacion">Click aqui para renovar</button>
+                    </div>
+                </div>                       
+            </c:if>
+
+            <c:if test="${renovacionExitosa}">                
+                <div class="row">
+                    <div class="col">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <p class="fs-3">Renovacion realizada con exito, proceda a realizar el ingreso</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>  
+                    </div>
+                </div>                   
+            </c:if>
+                
             <div class="row m-1">
                 <div class="col">
                     <hr class="border border-secondary border-3 opacity-75">
@@ -72,7 +113,7 @@
                 </div>
             </div>
             <!-- usamos JSTL para validar si el mensaje de salida es exitoso, y lo mostramos usando el atributo pasado por Request.setParameter -->
-            <c:if test="${mensajeSalida}">
+            <c:if test="${SalidaExitosa}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <p class="fs-3">valor a pagar $= ${valorPagar}. Recuerde refrescar la Tabla</p>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

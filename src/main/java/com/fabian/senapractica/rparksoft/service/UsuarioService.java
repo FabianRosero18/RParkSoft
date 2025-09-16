@@ -29,8 +29,8 @@ public class UsuarioService {
     public void crearUsuario(){
         
         this.establecerFechaHoraMembresia();
-        UsuarioDAO dao = new UsuarioDAO();
-        dao.insertarUsuario(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.insertarUsuario(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
     }
     private void establecerFechaHoraMembresia(){
         //obtener la fecha actual

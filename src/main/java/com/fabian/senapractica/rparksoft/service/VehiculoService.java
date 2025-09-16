@@ -24,8 +24,8 @@ public class VehiculoService {
     }
     public void crearVehiculo(){
         
-        VehiculoDAO dao = new VehiculoDAO();
-        dao.insertarVehiculo(placa,tipo,color,marca,idUsuario);
+        VehiculoDAO vehiculoDAO = new VehiculoDAO();
+        vehiculoDAO.insertarVehiculo(placa,tipo,color,marca,idUsuario);
         
     }
     

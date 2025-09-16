@@ -4,14 +4,19 @@
  */
 package com.fabian.senapractica.rparksoft.service;
 
+
 import com.fabian.senapractica.rparksoft.dao.FacturaDAO;
 import com.fabian.senapractica.rparksoft.dao.ServicioDAO;
 import com.fabian.senapractica.rparksoft.dao.TarifaDAO;
+import com.fabian.senapractica.rparksoft.dao.UsuarioDAO;
 import com.fabian.senapractica.rparksoft.dao.VehiculoDAO;
 import com.fabian.senapractica.rparksoft.model.Servicio;
+import com.fabian.senapractica.rparksoft.model.Tarifa;
+import com.fabian.senapractica.rparksoft.model.Vehiculo;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,18 +25,27 @@ import java.util.List;
  */
 public class PrincipalService {
     
-    private String idVehiculo,tipoTarifa,idSalida,accion;
-    private int valorPagar;
-    private long horas;
-    private Boolean mensajeSalidaExitoso = false;
-    private FacturaDAO factura;
-    private ServicioDAO servicio;
-    private VehiculoDAO vehiculo;
-    private TarifaDAO tarifa;
+    private String  idVehiculo,
+                    tipoTarifa,
+                    idSalida,
+                    accion;
+    private int     cantidadAutos=0,
+                    cantidadMotos=0,
+                    cantidadBicis=0,
+                    valorPagar;
+    private long    horas;
+    private Boolean ingresoExitoso = Boolean.FALSE,
+                    salidaExitoso = Boolean.FALSE, 
+                    membresiaVencida= Boolean.TRUE,
+                    renovacionExitosa= Boolean.FALSE;
+    private FacturaDAO  facturaDAO;
+    private ServicioDAO servicioDAO;
+    private VehiculoDAO vehiculoDAO;
+    private TarifaDAO   tarifaDAO;
     private DateTimeFormatter formatter;
 
      public PrincipalService(){
-        servicio = new ServicioDAO();
+        servicioDAO = new ServicioDAO();
     }
     
     public PrincipalService(String idVehiculo, String tipoTarifa, String idSalida, String accion) {
@@ -44,65 +58,132 @@ public class PrincipalService {
     
     public List<Servicio> listarServicios(){
         
-        servicio.consultarServicios();
-        List<Servicio> servicios = servicio.getServicios();
+        List<Servicio> servicios = new ArrayList<>();
+        servicioDAO.consultarServicios();
+        servicios = servicioDAO.getServicios();
         return servicios;
+    }
+    
+    public void contarVehiculosPorTipo(){
+        
+        List<Servicio> vehiculosEnServicio = new ArrayList<>();
+        vehiculosEnServicio = servicioDAO.consultarVehiculosEnServicio();
+        
+        for(Servicio s : vehiculosEnServicio){
+            switch (s.getVehiculo().getTipo()) {
+                case "Automovil":
+                    cantidadAutos++;
+                    break;
+                case "Motocicleta":
+                    cantidadMotos++;
+                    break;
+                case "Bicicleta":
+                    cantidadBicis++;
+                    break;                    
+                default:
+                    
+            }
+        }
     }
 
     public void validarAccion(){
         
-        if(accion.equals("ingreso")){
-            this.realizarIngreso();
-        }else if( accion.equals("salida")){
-            this.realizarSalida();
+        switch (accion) {
+            case "ingreso":
+                this.realizarIngreso();
+                break;
+            case "salida":
+                this.realizarSalida();
+                break;
+            case "renovacion":
+                this.renovarMembresia();
+                break;                  
+            default:
         }
+        
     }
     
     private void realizarIngreso(){
         
-        vehiculo = new VehiculoDAO();
-        tarifa = new TarifaDAO();
-        //vehiculoServicio = vehiculo.consultarPorId(idVehiculo)
+        vehiculoDAO = new VehiculoDAO();
+        tarifaDAO = new TarifaDAO();
         
-        servicio.insertarServicio(
-                vehiculo.consultarPorId(idVehiculo),
-                tarifa.consultarPorVehiculoTipo(vehiculo.consultarPorId(idVehiculo).getTipo(),tipoTarifa),
-                fechaHora()
-        );
+        Vehiculo vehiculo = vehiculoDAO.consultarPorId(idVehiculo);
+        Tarifa tarifa = tarifaDAO.consultarPorVehiculoTipo(vehiculo.getTipo(),tipoTarifa);
+        //en caso de que sea cliente con membresia debemos validarlo al ingreso, para evitar hacerlo si no la renueva
+        //este metodo retorna true si, el cliente NO es de membresia mensual o en caso de serlo y contar con su membresia vigente
+        if(this.validarMembresiaVigenciaIngreso(tarifa,vehiculo)){
+            servicioDAO.insertarServicio(vehiculo,tarifa,fechaHoraActual());
+            ingresoExitoso = Boolean.TRUE;
+        }
+        else{
+            membresiaVencida = Boolean.TRUE;
+        }
     }
     
     private void realizarSalida(){
         
-        servicio.consultarPorId(Integer.parseInt(idSalida));
+        servicioDAO.consultarSalidaPorId(Integer.parseInt(idSalida));
         /*esta condicional es obtenida desde el DAO, indica que si no se encontro un servicio por el ID se procede a buscar por el vehiculo, asumiento que la ID
         ingresada es entonces el del vehiculo*/
-        if(servicio.isValidacionId() == false){
+        if(servicioDAO.isValidacionId() == false){
             
-            vehiculo = new VehiculoDAO();
-            servicio.consultarPorVehiculo(vehiculo.consultarPorId(idSalida));
+            vehiculoDAO = new VehiculoDAO();
+            servicioDAO.consultarSalidaPorVehiculo(vehiculoDAO.consultarPorId(idSalida));
         }
         
         this.ingresarFactura();
-        servicio.eliminarServicio();
+        servicioDAO.eliminarServicio();
         
-        if(servicio.getServicio() == null){
-            mensajeSalidaExitoso = Boolean.TRUE;
+        if(servicioDAO.getServicio() == null){
+            salidaExitoso = Boolean.TRUE;
         }
+    }
+    //este metodo valida si el cliente es de membresia mensual, y en caso de serlo, valida si esta vigente
+    private Boolean validarMembresiaVigenciaIngreso(Tarifa tarifa, Vehiculo vehiculo){
+        
+        Boolean vigencia = Boolean.TRUE;
+        
+        //validamos si el cliente tiene una tarifa del tipo membresia mensual
+        if(tarifa.getTipo().equals("Membresia mensual")){
+            
+            //reutilizamos el metodo de calcular el tiempo establecido que se usa en la salida, para la validacion de la membresia, la cual da valor al
+            //atributo global horas
+            this.calcularTiempoTranscurrido(vehiculo.getUsuario().getFechaHoraMembresia());
+            //dividimos entre la cantidad de horas que tiene el dia, asi obtenemos los dias transcurridos
+            int dias = (int) (horas/24);
+            int diasRestantes = 30 - dias;
+            
+            if(diasRestantes <= 0){
+                vigencia = Boolean.FALSE;
+            }
+        }
+        
+        return vigencia;
+    }
+    
+    private boolean renovarMembresia() {
+        
+        vehiculoDAO = new VehiculoDAO();
+        renovacionExitosa = UsuarioDAO.actualizarFechaHoraMembresia(vehiculoDAO.consultarPorId(idVehiculo),this.fechaHoraActual());
+        
+        return renovacionExitosa;
     }
     
     private void ingresarFactura(){
        
-        this.calcularTiempoTranscurrido();
-        factura = new FacturaDAO();
+        this.calcularTiempoTranscurrido(servicioDAO.fechaHoraIngresoVehiculo());
+        this.calcularTarifa();
+        facturaDAO = new FacturaDAO();
         
-        factura.insertarFactura(servicio.getServicio(),this.fechaHora(),valorPagar);
+        facturaDAO.insertarFactura(servicioDAO.getServicio(),this.fechaHoraActual(),valorPagar);
         
     }
     
-    private void calcularTiempoTranscurrido(){
+    private void calcularTiempoTranscurrido(String fechaInicial){
         
         //obtenemos la fecha de ingreso al parking de la base de datos, pero como esta en String debemos convertirla a LocalDateTime con la funcion parse, pasando la fecha y el formato
-        LocalDateTime fechaIngresoParking = LocalDateTime.parse(servicio.fechaHoraIngresoVehiculo(),formatter);
+        LocalDateTime fechaIngresoParking = LocalDateTime.parse(fechaInicial,formatter);
         //con la clase Duration podemos obtener el tiempo transcurrido entre la entrada y salida del vehiculo
         Duration duracion = Duration.between(fechaIngresoParking,LocalDateTime.now());
         
@@ -113,26 +194,53 @@ public class PrincipalService {
         if(minutos > 0){
             horas += 1;
         }
-        this.calcularTarifa();
-    }
-    private void calcularTarifa(){
-                
-        valorPagar = (int) (servicio.getServicio().getTarifa().getPrecio() * horas);
         
     }
-    private String fechaHora(){
+    
+    private void calcularTarifa(){
+                
+        valorPagar = (int) (servicioDAO.getServicio().getTarifa().getPrecio() * horas);
+        
+    }
+    private String fechaHoraActual(){
         
         LocalDateTime actual = LocalDateTime.now();
         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return actual.format(formatter);
     }
 
-    public Boolean getMensajeSalidaExitoso() {
-        return mensajeSalidaExitoso;
+    public Boolean getIngresoExitoso() {
+        return ingresoExitoso;
+    }
+    
+    public Boolean getSalidaExitoso() {
+        return salidaExitoso;
     }
     
     public int getValorPagar() {
         return valorPagar;
     }
+
+    public Boolean getMembresiaVencida() {
+        return membresiaVencida;
+    }
+
+    public Boolean getRenovacionExitosa() {
+        return renovacionExitosa;
+    }
+
+    public int getCantidadAutos() {
+        return cantidadAutos;
+    }
+
+    public int getCantidadMotos() {
+        return cantidadMotos;
+    }
+
+    public int getCantidadBicis() {
+        return cantidadBicis;
+    }
+    
+    
     
 }

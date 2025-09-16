@@ -57,7 +57,6 @@ public class VehiculoDAO {
         }
         return vehiculo;
     }
-    
-    
+   
     
 }

@@ -14,29 +14,29 @@ import java.util.List;
  */
 public class TarifaService {
     
-    private TarifaDAO tarifas;
+    private TarifaDAO tarifaDAO;
     private List<Integer> precios = new ArrayList<>();
 
     public TarifaService(){
-        tarifas = new TarifaDAO();
+        tarifaDAO = new TarifaDAO();
     }
 
     public void listarTarifas(){
-        tarifas.consultarTarifas();
+        tarifaDAO.consultarTarifas();
     }
     public void validarTarifasActualizar(){
         
         int i = 1;
         
         for(int precio : precios){
-            if(precio > 0) tarifas.modificarTarifa(i,precio);
+            if(precio > 0) tarifaDAO.modificarTarifa(i,precio);
             i++;
         }
         
     }
     
     public ArrayList<Integer> precios(){
-        return tarifas.getPrecios();
+        return tarifaDAO.getPrecios();
     }
 
     public void setPrecios(List<Integer> precios) {

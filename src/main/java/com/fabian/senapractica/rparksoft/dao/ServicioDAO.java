@@ -32,10 +32,8 @@ public class ServicioDAO {
     public void consultarServicios(){
         
         servicios = new ArrayList<>();
-        servicios = em.createQuery("select s from Servicio s",Servicio.class)
-               .    getResultList();
-        
-       
+        servicios = em.createQuery("select s from Servicio s",Servicio.class).getResultList();
+
     }
     
     public void insertarServicio(Vehiculo vehiculo, Tarifa tarifa, String fechaHora){
@@ -55,7 +53,7 @@ public class ServicioDAO {
         }
         
     }
-    public void consultarPorId(int idSalida){
+    public void consultarSalidaPorId(int idSalida){
         
         try {
             em.getTransaction().begin();
@@ -69,18 +67,17 @@ public class ServicioDAO {
         }
     }
     
-    public void consultarPorVehiculo(Vehiculo vehiculo){
-        
+    public void consultarSalidaPorVehiculo(Vehiculo vehiculo){
         try {
-            //Typedquery<Servicio> le dice al sistema que el query obtenido sera del tipo Servicio, no del tipo Objeto generico
             //en este caso no usamos typedquery sino que lo asignamos directamente al atributo de tipo Servicio
             servicio = em.createQuery("select s from Servicio s where s.vehiculo= :vehiculo",Servicio.class)
                     .setParameter("vehiculo", vehiculo).getSingleResult();
             
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            throw new RuntimeException("Error consultando la salida por vehículo", e);        
         }
     }
+
     public void eliminarServicio(){
     
         try {
@@ -93,6 +90,18 @@ public class ServicioDAO {
         finally{
             em.close();
         }
+    }
+    
+    public List<Servicio> consultarVehiculosEnServicio(){
+        
+        List<Servicio> vehiculosEnServicio = new ArrayList<>();
+        
+        try {
+             vehiculosEnServicio = em.createQuery("SELECT s.vehiculo FROM Servicio s", Servicio.class).getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Error consultando los vehiculos en servicio", e);        
+        }
+        return vehiculosEnServicio;
     }
     
     public String fechaHoraIngresoVehiculo(){
