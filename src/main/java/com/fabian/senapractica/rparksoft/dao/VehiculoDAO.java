@@ -5,6 +5,7 @@
 package com.fabian.senapractica.rparksoft.dao;
 
 import com.fabian.senapractica.rparksoft.model.JpaUtil;
+import com.fabian.senapractica.rparksoft.model.Usuario;
 import com.fabian.senapractica.rparksoft.model.Vehiculo;
 import jakarta.persistence.EntityManager;
 
@@ -14,25 +15,25 @@ import jakarta.persistence.EntityManager;
  */
 public class VehiculoDAO {
     
-    private EntityManager em;
     private Vehiculo vehiculo;
 
     public VehiculoDAO() {
         vehiculo = new Vehiculo();
-        this.em = JpaUtil.getEntityManager();
     }
     
     public void insertarVehiculo(String placa, String tipo, String color, String marca, Long idUsuario){
         
         UsuarioDAO daoUsuario = new UsuarioDAO();
-
+        Usuario usuario = daoUsuario.consultarUsuarioPorId(idUsuario);
+        
+        EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             vehiculo.setPlaca(placa);
             vehiculo.setTipo(tipo);
             vehiculo.setColor(color);
             vehiculo.setMarca(marca);
-            vehiculo.setUsuario(daoUsuario.consultarUsuarioPorId(idUsuario));
+            vehiculo.setUsuario(usuario);
             em.persist(vehiculo);
             em.getTransaction().commit();
             
@@ -46,6 +47,8 @@ public class VehiculoDAO {
     }
     
     public Vehiculo consultarPorId(String id){
+        
+        EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             vehiculo = em.find(Vehiculo.class, id);
@@ -57,6 +60,4 @@ public class VehiculoDAO {
         }
         return vehiculo;
     }
-   
-    
 }

@@ -32,7 +32,7 @@ public class Servicio {
     @JoinColumn(name="id_tarifa")
     private Tarifa tarifa;
     @Column(name = "fecha_hora_ingreso")
-    private String fechaHoraIgreso;
+    private String fechaHoraIngreso;
 
     public Servicio() {
     }
@@ -61,12 +61,12 @@ public class Servicio {
         this.vehiculo = vehiculo;
     }
 
-    public String getFechaHoraIgreso() {
-        return fechaHoraIgreso;
+    public String getFechaHoraIngreso() {
+        return fechaHoraIngreso;
     }
 
-    public void setFechaHoraIgreso(String fechaHoraIgreso) {
-        this.fechaHoraIgreso = fechaHoraIgreso;
+    public void setFechaHoraIngreso(String fechaHoraIngreso) {
+        this.fechaHoraIngreso = fechaHoraIngreso;
     }
 
 }

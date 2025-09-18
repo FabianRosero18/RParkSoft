@@ -16,6 +16,7 @@ public class TarifaService {
     
     private TarifaDAO tarifaDAO;
     private List<Integer> precios = new ArrayList<>();
+    private List<String> preciosModificar = new ArrayList<>();
 
     public TarifaService(){
         tarifaDAO = new TarifaDAO();
@@ -24,24 +25,34 @@ public class TarifaService {
     public void listarTarifas(){
         tarifaDAO.consultarTarifas();
     }
+    
     public void validarTarifasActualizar(){
         
         int i = 1;
         
-        for(int precio : precios){
-            if(precio > 0) tarifaDAO.modificarTarifa(i,precio);
+        for(String precio : preciosModificar){
+        // Este try intenta convertir el valor ingresado a entero.
+        // Si el campo está vacío ("") o contiene texto no numérico,
+        // se lanzará un NumberFormatException.            
+            try {
+                int precioValidado = Integer.parseInt(precio);
+                if(precioValidado > 0) tarifaDAO.modificarTarifa(i,precioValidado);
+            } catch (NumberFormatException  e) {
+            // Si el campo está vacío o contiene un valor inválido,
+            // no se realiza ninguna modificación y se continúa con la siguiente iteración.
+            }               
+            
             i++;
         }
-        
     }
     
-    public ArrayList<Integer> precios(){
+    public List<Integer> precios(){
         return tarifaDAO.getPrecios();
     }
 
-    public void setPrecios(List<Integer> precios) {
-        this.precios = precios;
+
+    public void setPreciosModificar(List<String> preciosModificar) {
+        this.preciosModificar = preciosModificar;
     }
-    
-    
+
 }

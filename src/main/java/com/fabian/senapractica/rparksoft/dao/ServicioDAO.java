@@ -20,29 +20,29 @@ public class ServicioDAO {
     
     private Servicio servicio;
     private List<Servicio> servicios;
-    private EntityManager em;
+    //private EntityManager em;
     private VehiculoDAO vehiculoDAO;
     private TarifaDAO tarifaDAO;
-    private boolean validacionId = false;
 
     public ServicioDAO() {
-        this.em = JpaUtil.getEntityManager();
+        servicio = new Servicio();
     }
-    
+
     public void consultarServicios(){
-        
+        EntityManager em = JpaUtil.getEntityManager();
         servicios = new ArrayList<>();
         servicios = em.createQuery("select s from Servicio s",Servicio.class).getResultList();
 
     }
     
     public void insertarServicio(Vehiculo vehiculo, Tarifa tarifa, String fechaHora){
+            EntityManager em = JpaUtil.getEntityManager();
 
         try {
            em.getTransaction().begin();
            servicio.setVehiculo(vehiculo);
            servicio.setTarifa(tarifa);
-           servicio.setFechaHoraIgreso(fechaHora);
+           servicio.setFechaHoraIngreso(fechaHora);
            em.persist(servicio);
            em.getTransaction().commit();
            
@@ -54,20 +54,24 @@ public class ServicioDAO {
         
     }
     public void consultarSalidaPorId(int idSalida){
-        
+       EntityManager em = JpaUtil.getEntityManager();
+
         try {
             em.getTransaction().begin();
             servicio = em.find(Servicio.class, idSalida);
         } catch (Exception e) {
             em.getTransaction().rollback();
-        } 
-        //esta condicional valida si se encontro el servicio por el ID, luego es obtenido por PrincipalService para la continuacion de la logica
-        if(servicio != null){
-            validacionId = true;
         }
+        finally{
+            em.close();
+        }
+        //esta condicional valida si se encontro el servicio por el ID, luego es obtenido por PrincipalService para la continuacion de la logica
+
     }
     
     public void consultarSalidaPorVehiculo(Vehiculo vehiculo){
+        EntityManager em = JpaUtil.getEntityManager();
+
         try {
             //en este caso no usamos typedquery sino que lo asignamos directamente al atributo de tipo Servicio
             servicio = em.createQuery("select s from Servicio s where s.vehiculo= :vehiculo",Servicio.class)
@@ -76,14 +80,22 @@ public class ServicioDAO {
         } catch (Exception e) {
             throw new RuntimeException("Error consultando la salida por vehículo", e);        
         }
+        finally{
+            em.close();
+        }
     }
 
     public void eliminarServicio(){
-    
+        EntityManager em = JpaUtil.getEntityManager();
+        
+        System.out.println("desde eliminar servicio "+servicio.getId()+" - "+servicio.getVehiculo().getPlaca());
+
         try {
+            em.getTransaction().begin();
+            servicio =em.find(Servicio.class, servicio.getId());
             em.remove(servicio);
             em.getTransaction().commit();
-  
+            
         } catch (Exception e) {
             em.getTransaction().rollback();
         }
@@ -92,12 +104,13 @@ public class ServicioDAO {
         }
     }
     
-    public List<Servicio> consultarVehiculosEnServicio(){
-        
-        List<Servicio> vehiculosEnServicio = new ArrayList<>();
+    public List<Vehiculo> consultarVehiculosEnServicio(){
+        EntityManager em = JpaUtil.getEntityManager();
+
+        List<Vehiculo> vehiculosEnServicio = new ArrayList<>();
         
         try {
-             vehiculosEnServicio = em.createQuery("SELECT s.vehiculo FROM Servicio s", Servicio.class).getResultList();
+             vehiculosEnServicio = em.createQuery("SELECT s.vehiculo FROM Servicio s", Vehiculo.class).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Error consultando los vehiculos en servicio", e);        
         }
@@ -105,11 +118,7 @@ public class ServicioDAO {
     }
     
     public String fechaHoraIngresoVehiculo(){
-        return servicio.getFechaHoraIgreso();
-    }
-    
-    public boolean isValidacionId() {
-        return validacionId;
+        return servicio.getFechaHoraIngreso();
     }
 
     public List<Servicio> getServicios() {
@@ -119,11 +128,6 @@ public class ServicioDAO {
     public Servicio getServicio() {
         return servicio;
     }
-    //un getter de entitymanager para poder usarlo en FacturaDAO y aprovechar que estamos usando la misma peticion
-    public EntityManager getEm() {
-        return em;
-    }
-    
-    
+
     
 }

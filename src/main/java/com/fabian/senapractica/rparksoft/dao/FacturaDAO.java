@@ -5,6 +5,7 @@
 package com.fabian.senapractica.rparksoft.dao;
 
 import com.fabian.senapractica.rparksoft.model.Factura;
+import com.fabian.senapractica.rparksoft.model.JpaUtil;
 import com.fabian.senapractica.rparksoft.model.Servicio;
 import jakarta.persistence.EntityManager;
 
@@ -15,26 +16,32 @@ import jakarta.persistence.EntityManager;
 public class FacturaDAO{
     
     private Factura factura;
-    private EntityManager em;
+
     
     public FacturaDAO() {
+        factura = new Factura();
+
     }
     
-    public void insertarFactura(Servicio servicio, String fechaHoraSalida, int valodPagar){
-
+    public void insertarFactura(Servicio servicio, String fechaHoraSalida, int valorPagar){
+        
+        EntityManager em = JpaUtil.getEntityManager();
+                
         try {
             em.getTransaction().begin();
             factura.setId(servicio.getId());
             factura.setVehiculo(servicio.getVehiculo());
             factura.setTarifa(servicio.getTarifa());
-            factura.setFechaHoraIgreso(servicio.getFechaHoraIgreso());
+            factura.setFechaHoraIgreso(servicio.getFechaHoraIngreso());
             factura.setFechaHoraSalida(fechaHoraSalida);
-            factura.setValorPagar(valodPagar);
+            factura.setValorPagar(valorPagar);
             em.persist(factura);
             em.getTransaction().commit();
            
         } catch (Exception e) {
             em.getTransaction().rollback();
+        } finally {
+            em.close();
         } 
     }
     

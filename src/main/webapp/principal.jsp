@@ -31,19 +31,39 @@
                     <label class="fs-1 fw-bold fst-italic">INGRESO</label>    
                 </div>
             </div>
-           
-            <div class="row m-2">
-                <div class="col-md-4 text-end ms-1">
-                    <label class="fs-3 fw-bold fst-italic">Placa o Codigo (bicicleta)</label>
+            
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="row m-2">
+                        <div class="col-md-4 text-end ms-1">
+                            <label class="fs-3 fw-bold fst-italic">Placa o Codigo (bicicleta)</label>
+                        </div>    
+                        <div class="col-md-7 ms-3">
+                            <input class="form-control" type="text" name="idVehiculo" id="id">
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-4 text-end ms-1">
+                            <label class="fs-3 fw-bold fst-italic">Tipo de tarifa</label>
+                        </div>
+                        <div class="col-md-7 ms-3">
+                            <select class="form-select" id="floatingSelect" aria-label="Elija uno" name="tipoTarifa">
+                            <option value="Hora">Hora</option>
+                            <option value="Dia">Dia</option>
+                            <option value="Membresia mensual">Membresia mensual</option>
+                            </select>
+                        </div>
+                    </div>    
+                </div>
+                <div class="col-md-1">   
+                    <div class="row">
+                        <div class="d-grid gap-3 col-md-2 mx-auto">
+                            <!--se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
+                                salida o entrada-->
+                            <button type="submit" name="accion" value="ingreso" class="btn btn-secondary btn-lg">Ingreso</button>
+                        </div>
+                    </div>    
                 </div>    
-                <div class="col-md-5 ms-3">
-                    <input class="form-control" type="text" name="idVehiculo" id="id">
-                </div>
-                <div class="d-grid gap-2 col-md-1 mx-auto">
-                        <!--se coloca el mismo name a los botones de ingreso y salida (accion) ya que en el servlet el campo tomara el value del boton oprimido, segun sea 
-                            salida o entrada-->
-                        <button type="submit" name="accion" value="ingreso" class="btn btn-secondary btn-lg">Ingreso</button>
-                </div>
             </div>
             
             <c:if test="${ingresoExitoso}">
@@ -113,7 +133,7 @@
                 </div>
             </div>
             <!-- usamos JSTL para validar si el mensaje de salida es exitoso, y lo mostramos usando el atributo pasado por Request.setParameter -->
-            <c:if test="${SalidaExitosa}">
+            <c:if test="${salidaExitosa}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <p class="fs-3">valor a pagar $= ${valorPagar}. Recuerde refrescar la Tabla</p>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -175,10 +195,10 @@
                         <c:forEach var="item" items="${sessionScope.registros}">
                         <tbody>
                             <tr>
-                                <td><c:out value="${item.getTipoVehiculo()}"/></td>
-                                <td><c:out value="${item.getPlaca()}"/></td>
-                                <td><c:out value="${item.getFechaHora()}"/></td>
-                                <td><c:out value="${item.getIdFactura()}"/></td>
+                                <td><c:out value="${item.getVehiculo().getTipo()}"/></td>
+                                <td><c:out value="${item.getVehiculo().getPlaca()}"/></td>
+                                <td><c:out value="${item.getFechaHoraIngreso()}"/></td>
+                                <td><c:out value="${item.getId()}"/></td>
                             </tr>
                         </tbody>
                         </c:forEach>

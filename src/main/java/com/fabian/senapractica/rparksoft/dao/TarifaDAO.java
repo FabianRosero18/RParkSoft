@@ -8,6 +8,7 @@ import com.fabian.senapractica.rparksoft.model.JpaUtil;
 import com.fabian.senapractica.rparksoft.model.Tarifa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,21 +18,25 @@ public class TarifaDAO {
     
     private List<Tarifa> tarifas;
     private Tarifa tarifa = new Tarifa();
-    private ArrayList<Integer> precios = new ArrayList<>();
+    private List<Integer> precios = new ArrayList<>();
 
     public void consultarTarifas(){
-        EntityManager em = JpaUtil.getEntityManager();
-
-        em.getTransaction().begin();
-        Query query = em.createQuery("select t from EntityTarifas t",Tarifa.class);
-        tarifas = query.getResultList();        
-        em.close();
         
-        for(Tarifa tarifa : tarifas){
-            precios.add(tarifa.getPrecio());
+        EntityManager em = JpaUtil.getEntityManager();
+       
+        try {
+            TypedQuery<Tarifa> query = em.createQuery("select t from Tarifa t",Tarifa.class);
+            tarifas = query.getResultList(); 
+        } finally {
+            em.close();
+        }
+        
+       precios.clear();
+        for(Tarifa t : tarifas){
+            precios.add(t.getPrecio());
         }
     }
-    public Tarifa consultarPorVehiculoTipo(String tipoVehiculo, String tipoTarifa){
+    public Tarifa consultarPorVehiculoYTipoTarifa(String tipoVehiculo, String tipoTarifa){
         
         EntityManager em = JpaUtil.getEntityManager();
         try {
@@ -45,12 +50,12 @@ public class TarifaDAO {
         return tarifa;
     }
     
-    public void modificarTarifa(int i,int precio){
+    public void modificarTarifa(int id,int precio){
         
         EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-            tarifa = em.find(Tarifa.class, i);
+            tarifa = em.find(Tarifa.class, id);
             tarifa.setPrecio(precio);
             em.merge(tarifa);
             em.getTransaction().commit();
@@ -61,7 +66,7 @@ public class TarifaDAO {
         }
     }
 
-    public ArrayList<Integer> getPrecios(){
+    public List<Integer> getPrecios(){
         return precios;
     }
 

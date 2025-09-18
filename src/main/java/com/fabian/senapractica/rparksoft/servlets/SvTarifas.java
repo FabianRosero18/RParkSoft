@@ -50,31 +50,30 @@ public class SvTarifas extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        List<Integer> precios = new ArrayList<>();
+        //esta lista es de string porque necesitamos validar primero si viene vacia o con otro formato, antes de convertirla a int
+        List<String> precios = new ArrayList<>();
         
-        precios.add(Integer.valueOf(request.getParameter("motoHora")));
-        precios.add(Integer.valueOf(request.getParameter("autoHora")));
-        precios.add(Integer.valueOf(request.getParameter("biciHora")));
-        precios.add(Integer.valueOf(request.getParameter("motoDia")));
-        precios.add(Integer.valueOf(request.getParameter("autoDia")));
-        precios.add(Integer.valueOf(request.getParameter("biciDia")));
-        precios.add(Integer.valueOf(request.getParameter("motoMensual")));
-        precios.add(Integer.valueOf(request.getParameter("autoMensual")));
-        precios.add(Integer.valueOf(request.getParameter("biciMensual")));
+        precios.add(request.getParameter("motoHora"));
+        precios.add(request.getParameter("autoHora"));
+        precios.add(request.getParameter("biciHora"));
+        precios.add(request.getParameter("motoDia"));
+        precios.add(request.getParameter("autoDia"));
+        precios.add(request.getParameter("biciDia"));
+        precios.add(request.getParameter("motoMensual"));
+        precios.add(request.getParameter("autoMensual"));
+        precios.add(request.getParameter("biciMensual"));
         
         TarifaService tarifas = new TarifaService();
-        tarifas.setPrecios(precios);
+        tarifas.setPreciosModificar(precios);
         tarifas.validarTarifasActualizar();
         
         response.sendRedirect("tarifas.jsp");
 
         
     }
-
-
     @Override
     public String getServletInfo() {
         return "Short description";
     }
-
+                                                                                    
 }

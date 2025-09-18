@@ -16,16 +16,15 @@ import jakarta.persistence.EntityManager;
  */
 public class UsuarioDAO {
     
-    private EntityManager em;
+    //private EntityManager em;
     //entidad/modelo
     private Usuario usuario;
 
     public UsuarioDAO() {
-        this.em = JpaUtil.getEntityManager();
         usuario = new Usuario();
     }
     public void insertarUsuario(Long id, String nombre, String telefono, String correo, Boolean membresia, String fechaHoraMembresia){
-        
+        EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             usuario.setId(id);
@@ -40,17 +39,15 @@ public class UsuarioDAO {
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();    
-        } finally {
-            em.close();
-        }
+        } 
     }
     public Usuario consultarUsuarioPorId(Long idUsuario){
+        
+        EntityManager em = JpaUtil.getEntityManager();
         try {
-            em.getTransaction().begin();
             usuario = em.find(Usuario.class, idUsuario);
                     
         } catch (Exception e) {
-            em.getTransaction().rollback();
             e.printStackTrace();
             
         } finally {

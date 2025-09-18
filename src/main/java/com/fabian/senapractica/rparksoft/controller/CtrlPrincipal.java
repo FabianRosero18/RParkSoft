@@ -4,8 +4,7 @@
  */
 package com.fabian.senapractica.rparksoft.controller;
 
-import com.fabian.senapractica.rparksoft.modelAnterior.EntityPrincipal;
-import com.fabian.senapractica.rparksoft.modelAnterior.JpaUtil;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
@@ -18,7 +17,7 @@ import java.util.List;
 
 
 public class CtrlPrincipal {
-    
+/*    
     private String tipo, placa, accion, numeroFactura, placaSalida;
     private EntityPrincipal vehiculo;
     private EntityManager em;
@@ -139,7 +138,7 @@ public class CtrlPrincipal {
                 valorPagar = (int) (horas * 800);
                 break;
         }*/
-       
+  /*     
         CtrlTarifas tarifa = new CtrlTarifas();
         tarifa.consultarPorVehiculo(vehiculo.getTipoVehiculo(), em);
         valorPagar = (int) (horas * tarifa.getTarifaPorVehiculo());
@@ -194,5 +193,5 @@ public class CtrlPrincipal {
     public Long cantidadCarros() {
         return contarPorTipoVehiculo("Automovil");
     } 
-
+*/
 }
