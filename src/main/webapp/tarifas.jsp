@@ -61,7 +61,6 @@
                     </div>
                 </div>
             </div>
-                    
             <div class="col-4">
                 <div class="row m-2">
                     <div class="col-md-8 text-end">
@@ -123,7 +122,8 @@
                 </div>
          
         </form>
-            
+        <%-- condicional que evalua si el usuario conectado es administrador (para mostrar formulario), ya que solo el podra modificar tarifas --%>
+        <c:if test="${sessionScope.usuario eq 'administrador'}">    
             <div class="row">
                 <div class="col">
                     <hr class="border border-secondary border-3 opacity-75">
@@ -227,6 +227,6 @@
                     </div>
                 </div>
         </form>            
-            
+        </c:if>    
     </body>
 </html>

@@ -43,8 +43,8 @@ public class PrincipalService {
     private ServicioDAO servicioDAO;
     private VehiculoDAO vehiculoDAO;
     private TarifaDAO   tarifaDAO;
-
-     public PrincipalService(){
+    
+    public PrincipalService(){
         servicioDAO = new ServicioDAO();
     }
     
@@ -120,6 +120,7 @@ public class PrincipalService {
         }
         else{
             membresiaVencida = Boolean.TRUE;
+            valorPagar = tarifa.getPrecio();
         }
     }
     
@@ -223,6 +224,9 @@ public class PrincipalService {
         }
         
     }
+    
+
+    
     private String fechaHoraActual(){
         
         LocalDateTime actual = LocalDateTime.now();

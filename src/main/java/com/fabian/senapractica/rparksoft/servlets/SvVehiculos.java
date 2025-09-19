@@ -51,8 +51,15 @@ public class SvVehiculos extends HttpServlet {
         var marca = request.getParameter("marca");
         var idUsuario = request.getParameter("idUsuario");
         
+        
         VehiculoService vehiculo = new VehiculoService(placa,tipo,color,marca,idUsuario);
         vehiculo.crearVehiculo();
+        
+        request.setAttribute("ingresoExitoso", vehiculo.getIngresoExitoso());
+        request.setAttribute("ingresoFallido", vehiculo.getIngresoFallido());
+        request.setAttribute("mensajeFallido", vehiculo.getMensajeFallido());
+        
+        
         response.sendRedirect("vehiculos.jsp");
         
     }

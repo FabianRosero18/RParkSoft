@@ -7,7 +7,6 @@ com\fabian\senapractica\rparksoft\dao\TarifaDAO.class
 com\fabian\senapractica\rparksoft\dao\VehiculoDAO.class
 com\fabian\senapractica\rparksoft\service\TarifaService.class
 com\fabian\senapractica\rparksoft\model\Factura.class
-com\fabian\senapractica\rparksoft\servlets\SvMembresias.class
 com\fabian\senapractica\rparksoft\resources\JakartaEE10Resource.class
 com\fabian\senapractica\rparksoft\servlets\SvMenu.class
 com\fabian\senapractica\rparksoft\model\Servicio.class
@@ -15,12 +14,13 @@ com\fabian\senapractica\rparksoft\servlets\SvTarifas.class
 com\fabian\senapractica\rparksoft\dao\ServicioDAO.class
 com\fabian\senapractica\rparksoft\servlets\SvUsuarios.class
 com\fabian\senapractica\rparksoft\JakartaRestConfiguration.class
+com\fabian\senapractica\rparksoft\service\LoginService.class
+com\fabian\senapractica\rparksoft\dao\LoginDAO.class
 com\fabian\senapractica\rparksoft\servlets\SvLoggin.class
 com\fabian\senapractica\rparksoft\servlets\SvVehiculos.class
 com\fabian\senapractica\rparksoft\service\UsuarioService.class
 com\fabian\senapractica\rparksoft\servlets\SvPrincipal.class
 com\fabian\senapractica\rparksoft\model\Tarifa.class
 com\fabian\senapractica\rparksoft\model\Vehiculo.class
-com\fabian\senapractica\rparksoft\controller\CtrlLoggin.class
+com\fabian\senapractica\rparksoft\model\Login.class
 com\fabian\senapractica\rparksoft\service\PrincipalService.class
-com\fabian\senapractica\rparksoft\controller\CtrlPrincipal.class

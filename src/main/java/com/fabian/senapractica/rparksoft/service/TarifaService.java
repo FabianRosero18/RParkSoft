@@ -46,6 +46,7 @@ public class TarifaService {
         }
     }
     
+    
     public List<Integer> precios(){
         return tarifaDAO.getPrecios();
     }

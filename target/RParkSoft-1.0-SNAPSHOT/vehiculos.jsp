@@ -115,7 +115,26 @@
                     </div>
                 </div>
             </div>
-
+            <c:if test="${ingresoExitoso}">
+                <div class="row">
+                    <div class="col">                    
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <p class="fs-3">Vehiculo ingresado al usuario exitosamente</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>    
+            </c:if>
+            <c:if test="${ingresoFallido}">
+                <div class="row">
+                    <div class="col">                    
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <p class="fs-3">ERROR: ${mensajeFallido}</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>    
+            </c:if>
             <div class="row m-5">
                 <div class="col-md-2 offset-md-5 d-grid gap-5 align-self-center">
                     <button class="btn btn-secondary btn-lg">Guardar</button>

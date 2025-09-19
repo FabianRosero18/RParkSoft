@@ -84,7 +84,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <p class="fs-3">Cliente con vigencia vencida, debe renovarse</p>
+                            <p class="fs-3">Cliente con vigencia vencida, debe renovarse. valor atual de la membresia $= ${valorPagar}</p>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>

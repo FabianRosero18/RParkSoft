@@ -4,12 +4,13 @@
  */
 package com.fabian.senapractica.rparksoft.servlets;
 
-import com.fabian.senapractica.rparksoft.controller.CtrlLoggin;
+import com.fabian.senapractica.rparksoft.service.LoginService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -35,12 +36,17 @@ public class SvLoggin extends HttpServlet {
         var usuario = request.getParameter("usuario");
         var contrasena = request.getParameter("contrasena");
         
-        CtrlLoggin loggin = new CtrlLoggin(usuario,contrasena);
-        loggin.validacion();
-        String validacion = loggin.GetValidacion();
-        String direccionamiento = loggin.getDireccionamiento();
+        LoginService login = new LoginService(usuario,contrasena);
+        login.validacion();
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("usuario", login.getUsuario());
+        
+        String validacion = login.getValidacion();
+        String direccionamiento = login.getDireccionamiento();
         
         response.sendRedirect(direccionamiento+"?validacion="+validacion);
+
         
     }
 

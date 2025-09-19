@@ -39,13 +39,6 @@ public class SvPrincipal extends HttpServlet {
         //creamos una lista para pasarla al JSP a traves del atributo de sesion
         List<Servicio> servicios = principal.listarServicios();
         
-        for(Servicio s: servicios){
-            
-            System.out.println(s.getVehiculo().getTipo()+" - "+s.getVehiculo().getPlaca()+" - "+s.getFechaHoraIngreso()+" - "+s.getId());
-            
-                    
-            
-        }
         principal.contarVehiculosPorTipo();
         
         HttpSession session = request.getSession();
@@ -55,25 +48,6 @@ public class SvPrincipal extends HttpServlet {
         session.setAttribute("cantidadBicicletas", principal.getCantidadBicis());
         response.sendRedirect("principal.jsp");
         
-        /*CtrlPrincipal p = new CtrlPrincipal();
-        p.consulta();
-        
-        //List<EntityPrincipal> registros = p.getRegistros();
-        
-        
-        int cantidadCarros = p.cantidadCarros().intValue();
-        int cantidadMotos = p.cantidadMotos().intValue();
-        int cantidadBicicletas = p.cantidadBicicletas().intValue();
-        
-        //creando un atributo de sesion para pasar los parametros al JSP
-        HttpSession session = request.getSession();
-        //session.setAttribute("registros", registros);
-        session.setAttribute("cantidadCarros", cantidadCarros);
-        session.setAttribute("cantidadMotos", cantidadMotos);
-        session.setAttribute("cantidadBicicletas", cantidadBicicletas);
-        
-        response.sendRedirect("principal.jsp");
-        */
     }
 
 
@@ -94,6 +68,7 @@ public class SvPrincipal extends HttpServlet {
         request.setAttribute("valorPagar", principal.getValorPagar());
         request.setAttribute("ingresoExitoso", principal.getIngresoExitoso());
         request.setAttribute("membresiaVencida", principal.getMembresiaVencida());
+        request.setAttribute("valorPagar", principal.getValorPagar());
         request.setAttribute("renovacionExitosa", principal.getRenovacionExitosa());
         request.setAttribute("salidaExitosa", principal.getSalidaExitoso());
         request.setAttribute("idVehiculo", idVehiculo);

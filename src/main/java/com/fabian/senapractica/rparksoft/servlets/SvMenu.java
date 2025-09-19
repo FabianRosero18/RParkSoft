@@ -9,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 /**
  *
@@ -29,7 +30,11 @@ public class SvMenu extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
+        HttpSession session = request.getSession();
+
         var direccionamiento = request.getParameter("direccionamiento");
+        if(direccionamiento.equals("index.jsp")) session.invalidate();
+            
         response.sendRedirect(direccionamiento);
         
     }

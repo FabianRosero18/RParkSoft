@@ -42,6 +42,11 @@ public class SvTarifas extends HttpServlet {
         session.setAttribute("precios", tarifas.precios());
         response.sendRedirect("tarifas.jsp");
         
+        
+        /*System.out.println("usuario conectado: "+session.getAttribute("usuario"));
+        session.invalidate();*/
+        
+        
     }
 
 
