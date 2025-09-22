@@ -226,7 +226,18 @@
                         <button class="btn btn-secondary btn-lg">Modificar</button>
                     </div>
                 </div>
-        </form>            
+        </form>
+
+            <c:if test="${modificacionExitosa}">
+                <div class="row">
+                    <div class="col">                    
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <p class="fs-3">Tarifa modificada exitosamente, no olvide refrescar la lista</p>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>    
+            </c:if>
         </c:if>    
     </body>
 </html>

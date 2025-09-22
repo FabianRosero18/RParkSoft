@@ -21,10 +21,7 @@ public class VehiculoDAO {
         vehiculo = new Vehiculo();
     }
     
-    public void insertarVehiculo(String placa, String tipo, String color, String marca, Long idUsuario){
-        
-        UsuarioDAO daoUsuario = new UsuarioDAO();
-        Usuario usuario = daoUsuario.consultarUsuarioPorId(idUsuario);
+    public void insertarVehiculo(String placa, String tipo, String color, String marca, Usuario usuario){
         
         EntityManager em = JpaUtil.getEntityManager();
         try {

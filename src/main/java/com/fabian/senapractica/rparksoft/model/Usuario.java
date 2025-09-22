@@ -15,7 +15,7 @@ public class Usuario {
     
     @Id
     @Column(name = "documento")
-    private Long id;
+    private String id;
     private String nombre;
     private String telefono;
     private String correo;
@@ -26,11 +26,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

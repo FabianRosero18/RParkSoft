@@ -65,7 +65,6 @@
                     </div>    
                 </div>    
             </div>
-            
             <c:if test="${ingresoExitoso}">
                 <div class="row">
                     <div class="col">                    

@@ -72,6 +72,7 @@ public class SvPrincipal extends HttpServlet {
         request.setAttribute("renovacionExitosa", principal.getRenovacionExitosa());
         request.setAttribute("salidaExitosa", principal.getSalidaExitoso());
         request.setAttribute("idVehiculo", idVehiculo);
+        //se usa request dispatcher para cargar el jsp sin eliminar los seteos de atributos de arriba
         request.getRequestDispatcher("principal.jsp").forward(request, response);
         
     }

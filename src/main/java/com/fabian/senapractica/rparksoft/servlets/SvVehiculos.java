@@ -10,9 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 
 /**
@@ -58,10 +56,8 @@ public class SvVehiculos extends HttpServlet {
         request.setAttribute("ingresoExitoso", vehiculo.getIngresoExitoso());
         request.setAttribute("ingresoFallido", vehiculo.getIngresoFallido());
         request.setAttribute("mensajeFallido", vehiculo.getMensajeFallido());
-        
-        
-        response.sendRedirect("vehiculos.jsp");
-        
+        //se usa request dispatcher para cargar el jsp sin eliminar los seteos de atributos de arriba
+        request.getRequestDispatcher("vehiculos.jsp").forward(request, response);
     }
 
 

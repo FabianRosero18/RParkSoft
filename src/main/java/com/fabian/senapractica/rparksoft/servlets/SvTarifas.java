@@ -71,8 +71,8 @@ public class SvTarifas extends HttpServlet {
         TarifaService tarifas = new TarifaService();
         tarifas.setPreciosModificar(precios);
         tarifas.validarTarifasActualizar();
-        
-        response.sendRedirect("tarifas.jsp");
+        request.setAttribute("modificacionExitosa", tarifas.getModificacionExitosa());
+        request.getRequestDispatcher("tarifas.jsp").forward(request, response);
 
         
     }

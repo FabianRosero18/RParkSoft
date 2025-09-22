@@ -37,7 +37,7 @@ public class TarifaDAO {
         }
     }
     public Tarifa consultarPorVehiculoYTipoTarifa(String tipoVehiculo, String tipoTarifa){
-        
+               
         EntityManager em = JpaUtil.getEntityManager();
         try {
             tarifa = em.createQuery("select t from Tarifa t where t.descripcion =:tipoVehiculo and t.tipo =:tipoTarifa",Tarifa.class)

@@ -5,6 +5,7 @@
 package com.fabian.senapractica.rparksoft.service;
 
 import com.fabian.senapractica.rparksoft.dao.UsuarioDAO;
+import com.fabian.senapractica.rparksoft.model.Usuario;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,13 +15,16 @@ import java.time.format.DateTimeFormatter;
  */
 public class UsuarioService {
     
-    private Long id;
-    private String nombre,telefono,correo,fechaHoraMembresia;
+    private String id,nombre,telefono,correo,fechaHoraMembresia;
     private Boolean membresia;
     private DateTimeFormatter formatter; 
 
+    public UsuarioService(String id) {
+        this.id = id;
+    }
+
     public UsuarioService(String id, String nombre, String telefono, String correo, String membresia) {
-        this.id = Long.valueOf(id);
+        this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
@@ -31,6 +35,12 @@ public class UsuarioService {
         this.establecerFechaHoraMembresia();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         usuarioDAO.insertarUsuario(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
+    }
+    public Usuario buscarUsuario(){
+        
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.consultarUsuarioPorId(id);
+        
     }
     private void establecerFechaHoraMembresia(){
         //obtener la fecha actual

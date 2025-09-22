@@ -23,7 +23,7 @@ public class UsuarioDAO {
     public UsuarioDAO() {
         usuario = new Usuario();
     }
-    public void insertarUsuario(Long id, String nombre, String telefono, String correo, Boolean membresia, String fechaHoraMembresia){
+    public void insertarUsuario(String id, String nombre, String telefono, String correo, Boolean membresia, String fechaHoraMembresia){
         EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -41,7 +41,7 @@ public class UsuarioDAO {
             e.printStackTrace();    
         } 
     }
-    public Usuario consultarUsuarioPorId(Long idUsuario){
+    public Usuario consultarUsuarioPorId(String idUsuario){
         
         EntityManager em = JpaUtil.getEntityManager();
         try {

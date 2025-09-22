@@ -5,8 +5,8 @@
 package com.fabian.senapractica.rparksoft.service;
 
 import com.fabian.senapractica.rparksoft.dao.VehiculoDAO;
+import com.fabian.senapractica.rparksoft.model.Usuario;
 import jakarta.validation.ConstraintViolationException;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  *
@@ -18,8 +18,8 @@ public class VehiculoService {
                     tipo,
                     color,
                     marca,
+                    idUsuario,
                     mensajeFallido;
-    private Long idUsuario;
     private Boolean ingresoExitoso = Boolean.FALSE;
     private Boolean ingresoFallido = Boolean.FALSE;
 
@@ -28,19 +28,22 @@ public class VehiculoService {
         this.tipo = tipo;
         this.color = color;
         this.marca = marca;
-        this.idUsuario = Long.valueOf(idUsuario);
+        this.idUsuario = idUsuario;
     }
     public void crearVehiculo(){
+        UsuarioService usuarioService = new UsuarioService(idUsuario);
         
-        try {
+        Usuario usuario = usuarioService.buscarUsuario();
+        
+        if(usuario!= null){
             VehiculoDAO vehiculoDAO = new VehiculoDAO();
-            vehiculoDAO.insertarVehiculo(placa,tipo,color,marca,idUsuario);
+            vehiculoDAO.insertarVehiculo(placa,tipo,color,marca,usuario);
             ingresoExitoso = Boolean.TRUE;
-        } 
-        catch (ConstraintViolationException e) {
+        }
+        else{
             mensajeFallido = "Usuario no existente, debe crearse primero el usuario";
-            ingresoFallido = Boolean.FALSE;
-        }       
+            ingresoFallido = Boolean.TRUE;
+        }
     }
 
     public String getMensajeFallido() {

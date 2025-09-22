@@ -17,6 +17,7 @@ public class TarifaService {
     private TarifaDAO tarifaDAO;
     private List<Integer> precios = new ArrayList<>();
     private List<String> preciosModificar = new ArrayList<>();
+    private Boolean modificacionExitosa = Boolean.FALSE;
 
     public TarifaService(){
         tarifaDAO = new TarifaDAO();
@@ -36,8 +37,12 @@ public class TarifaService {
         // se lanzará un NumberFormatException.            
             try {
                 int precioValidado = Integer.parseInt(precio);
-                if(precioValidado > 0) tarifaDAO.modificarTarifa(i,precioValidado);
-            } catch (NumberFormatException  e) {
+                if(precioValidado > 0) {
+                    
+                    tarifaDAO.modificarTarifa(i,precioValidado);
+                    modificacionExitosa = Boolean.TRUE;
+                }
+            } catch (NumberFormatException e) {
             // Si el campo está vacío o contiene un valor inválido,
             // no se realiza ninguna modificación y se continúa con la siguiente iteración.
             }               
@@ -55,5 +60,11 @@ public class TarifaService {
     public void setPreciosModificar(List<String> preciosModificar) {
         this.preciosModificar = preciosModificar;
     }
+
+    public Boolean getModificacionExitosa() {
+        return modificacionExitosa;
+    }
+    
+    
 
 }
