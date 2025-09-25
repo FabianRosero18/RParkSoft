@@ -17,6 +17,8 @@ public class UsuarioService {
     
     private String id,nombre,telefono,correo,fechaHoraMembresia;
     private Boolean membresia;
+    private Boolean ingresoExitoso = Boolean.FALSE;
+    private Boolean ingresoFallido = Boolean.FALSE;
     private DateTimeFormatter formatter; 
 
     public UsuarioService(String id) {
@@ -32,9 +34,20 @@ public class UsuarioService {
     }
     public void crearUsuario(){
         
-        this.establecerFechaHoraMembresia();
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        usuarioDAO.insertarUsuario(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
+        //en caso que no se haya digitado ninguna ID de usuario
+       
+        if(id.isEmpty()){
+            ingresoFallido = Boolean.TRUE;
+            //esta linea interrumpe la ejecucion de este metodo, para que no continue con la insercion en la BD
+            return;
+        }
+        else{
+            this.establecerFechaHoraMembresia();
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            usuarioDAO.insertarUsuario(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
+            ingresoExitoso = Boolean.TRUE;
+        }
+ 
     }
     public Usuario buscarUsuario(){
         
@@ -50,4 +63,14 @@ public class UsuarioService {
         //guardamos la fecha en la variable string segun el formato definido
         fechaHoraMembresia = actual.format(formatter);
     }
+
+    public Boolean getIngresoExitoso() {
+        return ingresoExitoso;
+    }
+
+    public Boolean getIngresoFallido() {
+        return ingresoFallido;
+    }
+    
+    
 }

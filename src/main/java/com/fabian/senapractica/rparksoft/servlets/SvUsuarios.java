@@ -49,7 +49,11 @@ public class SvUsuarios extends HttpServlet {
         
         UsuarioService usuario = new UsuarioService(id,nombre,telefono,correo,membresia);
         usuario.crearUsuario();
-        response.sendRedirect("usuarios.jsp");
+        
+        request.setAttribute("ingresoExitoso", usuario.getIngresoExitoso());
+        request.setAttribute("ingresoFallido", usuario.getIngresoFallido());
+        //se usa request dispatcher para cargar el jsp sin eliminar los seteos de atributos de arriba
+        request.getRequestDispatcher("usuarios.jsp").forward(request, response);
     }
     @Override
     public String getServletInfo() {
