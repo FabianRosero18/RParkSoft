@@ -48,14 +48,16 @@ public class SvVehiculos extends HttpServlet {
         var color = request.getParameter("color");
         var marca = request.getParameter("marca");
         var idUsuario = request.getParameter("idUsuario");
-        
+        var accion = request.getParameter("accion");
         
         VehiculoService vehiculo = new VehiculoService(placa,tipo,color,marca,idUsuario);
-        vehiculo.crearVehiculo();
+        vehiculo.validarAccion(accion);
         
-        request.setAttribute("ingresoExitoso", vehiculo.getIngresoExitoso());
-        request.setAttribute("ingresoFallido", vehiculo.getIngresoFallido());
+        request.setAttribute("datosVehiculo", vehiculo.getDatosVehiculo());
+        request.setAttribute("ingresoExitoso", vehiculo.getAccionExitosa());
+        request.setAttribute("ingresoFallido", vehiculo.getAccionFallida());
         request.setAttribute("mensajeFallido", vehiculo.getMensajeFallido());
+        request.setAttribute("botonEliminar", vehiculo.getBotonEliminar());
         //se usa request dispatcher para cargar el jsp sin eliminar los seteos de atributos de arriba
         request.getRequestDispatcher("vehiculos.jsp").forward(request, response);
     }

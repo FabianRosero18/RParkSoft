@@ -88,7 +88,6 @@ public class ServicioDAO {
     public void eliminarServicio(){
         EntityManager em = JpaUtil.getEntityManager();
         
-        System.out.println("desde eliminar servicio "+servicio.getId()+" - "+servicio.getVehiculo().getPlaca());
 
         try {
             em.getTransaction().begin();

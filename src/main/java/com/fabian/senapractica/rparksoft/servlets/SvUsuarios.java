@@ -46,8 +46,11 @@ public class SvUsuarios extends HttpServlet {
         var telefono = request.getParameter("telefono");
         var correo = request.getParameter("correo");
         var membresia = request.getParameter("membresia");
+        //capturar el boton pulsado y por ende la accion a realizar
+        var accion = request.getParameter("accion");
         
         UsuarioService usuario = new UsuarioService(id,nombre,telefono,correo,membresia);
+        usuario.validarAccion(accion);
         usuario.crearUsuario();
         
         request.setAttribute("ingresoExitoso", usuario.getIngresoExitoso());

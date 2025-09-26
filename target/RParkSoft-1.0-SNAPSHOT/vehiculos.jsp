@@ -49,7 +49,7 @@
                             </div>    
                             <div class="row m-2">    
                                 <div class="col">
-                                    <input class="form-control" type="text" name="placa">   
+                                    <input class="form-control" type="text" name="placa" value="${datosVehiculo['placa']}">   
                                 </div>    
                             </div>        
                         </div>
@@ -62,9 +62,10 @@
                             <div class="row m-2">    
                                 <div class="col">
                                     <select class="form-select" id="floatingSelect" aria-label="Elija uno" name="tipo">
-                                    <option value="Motocicleta">Motocicleta</option>
-                                    <option value="Automovil">Automovil</option>
-                                    <option value="Bicicleta">Bicicleta</option>
+                                    <%-- usamos JSTL para verificar cual es el tipo de vehiculo que esta guardado en el map y asi mostrarlo seleccionado--%>
+                                    <option value="Motocicleta" <c:if test="${datosVehiculo['tipo'] == 'Motocicleta'}">selected</c:if>>Motocicleta</option>
+                                    <option value="Automovil" <c:if test="${datosVehiculo['tipo'] == 'Automovil'}">selected</c:if>>Automovil</option>
+                                    <option value="Bicicleta" <c:if test="${datosVehiculo['tipo'] == 'Bicicleta'}">selected</c:if>>Bicicleta</option>
                                     </select>
                                 </div>    
                             </div>        
@@ -81,7 +82,7 @@
                             </div>    
                             <div class="row m-2">    
                                 <div class="col">
-                                    <input class="form-control" type="text" name="color">   
+                                    <input class="form-control" type="text" name="color" value="${datosVehiculo['color']}">   
                                 </div>    
                             </div>                          
                         </div>  
@@ -94,7 +95,7 @@
                             </div>
                             <div class="row m-2">
                                 <div class="col">
-                                    <input class="form-control" type="text" name="marca">   
+                                    <input class="form-control" type="text" name="marca" value="${datosVehiculo['marca']}">   
                                 </div>    
                             </div>        
                         </div>                 
@@ -108,7 +109,7 @@
                             </div>
                             <div class="row m-2">
                                 <div class="col">
-                                    <input class="form-control" type="text" name="idUsuario">   
+                                    <input class="form-control" type="text" name="idUsuario" value="${datosVehiculo['idUsuario']}">   
                                 </div>    
                             </div>                     
                         </div>
@@ -119,7 +120,7 @@
                 <div class="row">
                     <div class="col">                    
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <p class="fs-3">Vehiculo ingresado al usuario exitosamente</p>
+                            <p class="fs-3">Accion realizada con exito</p>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
@@ -136,15 +137,20 @@
                 </div>    
             </c:if>
             <div class="row m-5">
-                <div class="col-md-2 offset-md-5 d-grid gap-5 align-self-center">
-                    <button class="btn btn-secondary btn-lg">Guardar</button>
+                <div class="col-md-2 offset-md-1 d-grid gap-4 align-self-center">
+                    <!-- name permite identificar el boton y value hace que tome el valor asignado, para ser capturado en el servlet segun la accion a realizar -->
+                    <button class="btn btn-secondary btn-lg" name="accion" value="consultar">Consultar</button>
                 </div>
+                <div class="col-md-2 offset-md-2 d-grid gap-4 align-self-center">
+                    <button class="btn btn-secondary btn-lg" name="accion" value="guardar">Guardar</button>
+                </div>
+                <c:if test="${botonEliminar}">
+                <div class="col-md-2 offset-md-2 d-grid gap-4 align-self-center">
+                    <button class="btn btn-secondary btn-lg" name="accion" value="eliminar">Eliminar</button>
+                </div>
+                </c:if>
             </div>
         </form>
-            
-            
-            <br>
-
     </body>
 </html>
 

@@ -18,11 +18,12 @@ public class VehiculoDAO {
     private Vehiculo vehiculo;
 
     public VehiculoDAO() {
-        vehiculo = new Vehiculo();
+        //vehiculo = new Vehiculo();
     }
     
-    public void insertarVehiculo(String placa, String tipo, String color, String marca, Usuario usuario){
-        
+    public void insertar(String placa, String tipo, String color, String marca, Usuario usuario){
+        //debido a que el metodo consultarVehiculo del service ha creado una instancia de vehiculo anteriormente (y esta quedo nula) es necesario volver a crear la instancia
+        vehiculo = new Vehiculo();
         EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -45,6 +46,7 @@ public class VehiculoDAO {
     
     public Vehiculo consultarPorId(String id){
         
+        vehiculo = new Vehiculo();
         EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -57,4 +59,43 @@ public class VehiculoDAO {
         }
         return vehiculo;
     }
+    
+    public void editar(String placa, String tipo, String color, String marca, Usuario usuario){
+        
+        EntityManager em = JpaUtil.getEntityManager();
+        vehiculo = em.find(Vehiculo.class, placa);
+        try {
+            em.getTransaction().begin();
+            vehiculo.setPlaca(placa);
+            vehiculo.setTipo(tipo);
+            vehiculo.setColor(color);
+            vehiculo.setMarca(marca);
+            vehiculo.setUsuario(usuario);
+            em.merge(vehiculo);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+        
+    }
+    
+    public void borrar(String placa){
+        EntityManager em = JpaUtil.getEntityManager();
+        vehiculo = em.find(Vehiculo.class, placa);
+        try {
+            em.getTransaction().begin();
+            em.remove(vehiculo);
+            em.getTransaction().commit();
+            
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
+    
+   
 }

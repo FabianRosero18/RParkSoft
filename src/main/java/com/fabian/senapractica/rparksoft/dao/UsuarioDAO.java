@@ -20,10 +20,9 @@ public class UsuarioDAO {
     //entidad/modelo
     private Usuario usuario;
 
-    public UsuarioDAO() {
-        usuario = new Usuario();
-    }
+
     public void insertarUsuario(String id, String nombre, String telefono, String correo, Boolean membresia, String fechaHoraMembresia){
+        usuario = new Usuario();
         EntityManager em = JpaUtil.getEntityManager();
         try {
             em.getTransaction().begin();
@@ -43,6 +42,7 @@ public class UsuarioDAO {
     }
     public Usuario consultarUsuarioPorId(String idUsuario){
         
+        usuario = new Usuario();
         EntityManager em = JpaUtil.getEntityManager();
         try {
             usuario = em.find(Usuario.class, idUsuario);

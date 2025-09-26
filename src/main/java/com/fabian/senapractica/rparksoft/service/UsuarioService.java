@@ -47,7 +47,7 @@ public class UsuarioService {
             usuarioDAO.insertarUsuario(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
             ingresoExitoso = Boolean.TRUE;
         }
- 
+
     }
     public Usuario buscarUsuario(){
         
@@ -70,6 +70,10 @@ public class UsuarioService {
 
     public Boolean getIngresoFallido() {
         return ingresoFallido;
+    }
+
+    public void validarAccion(String accion) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

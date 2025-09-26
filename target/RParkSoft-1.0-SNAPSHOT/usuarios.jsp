@@ -137,12 +137,19 @@
                 </div>    
             </c:if>            
             <div class="row m-5">
-                <div class="col-md-2 offset-md-5 d-grid gap-5 align-self-center">
-                    <button class="btn btn-secondary btn-lg">Guardar</button>
+                <div class="col-md-2 offset-md-1 d-grid gap-4 align-self-center">
+                    <button class="btn btn-secondary btn-lg" name="accion" value="consultar">Consultar</button>
                 </div>
+                <div class="col-md-2 offset-md-2 d-grid gap-4 align-self-center">
+                    <button class="btn btn-secondary btn-lg" name="accion" value="guardar">Guardar</button>
+                </div>
+                <c:if test="${botonEliminar}">
+                <div class="col-md-2 offset-md-2 d-grid gap-4 align-self-center">
+                    <button class="btn btn-secondary btn-lg" name="accion" value="eliminar">Eliminar</button>
+                </div>
+                </c:if>
             </div>
         </form>
-        <br>
     </body>
 </html>
 
