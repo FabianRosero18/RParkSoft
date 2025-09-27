@@ -21,7 +21,7 @@ public class UsuarioDAO {
     private Usuario usuario;
 
 
-    public void insertarUsuario(String id, String nombre, String telefono, String correo, Boolean membresia, String fechaHoraMembresia){
+    public void insertar(String id, String nombre, String telefono, String correo, Boolean membresia, String fechaHoraMembresia){
         usuario = new Usuario();
         EntityManager em = JpaUtil.getEntityManager();
         try {
@@ -40,7 +40,7 @@ public class UsuarioDAO {
             e.printStackTrace();    
         } 
     }
-    public Usuario consultarUsuarioPorId(String idUsuario){
+    public Usuario consultarPorId(String idUsuario){
         
         usuario = new Usuario();
         EntityManager em = JpaUtil.getEntityManager();
@@ -76,6 +76,14 @@ public class UsuarioDAO {
         }
         
         return renovacion;
+    }
+
+    public void editar(String id, String nombre, String telefono, String correo, Boolean membresia) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void borrar(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

@@ -8,6 +8,8 @@ import com.fabian.senapractica.rparksoft.dao.UsuarioDAO;
 import com.fabian.senapractica.rparksoft.model.Usuario;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -15,46 +17,138 @@ import java.time.format.DateTimeFormatter;
  */
 public class UsuarioService {
     
-    private String id,nombre,telefono,correo,fechaHoraMembresia;
+    private String  id,
+                    nombre,
+                    telefono,
+                    correo,
+                    fechaHoraMembresia,
+                    mensajeFallido;
     private Boolean membresia;
-    private Boolean ingresoExitoso = Boolean.FALSE;
-    private Boolean ingresoFallido = Boolean.FALSE;
-    private DateTimeFormatter formatter; 
+    private Boolean accionExitosa,
+                    accionFallida,
+                    botonEliminar= Boolean.FALSE;
+    private DateTimeFormatter formatter;
+    private Map <String,String> datosUsuario;
+    private UsuarioDAO usuarioDAO;
 
     public UsuarioService(String id) {
         this.id = id;
+        usuarioDAO = new UsuarioDAO();
     }
 
     public UsuarioService(String id, String nombre, String telefono, String correo, String membresia) {
+        usuarioDAO = new UsuarioDAO();
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.membresia = Boolean.valueOf(membresia);
     }
-    public void crearUsuario(){
-        
-        //en caso que no se haya digitado ninguna ID de usuario
-       
-        if(id.isEmpty()){
-            ingresoFallido = Boolean.TRUE;
-            //esta linea interrumpe la ejecucion de este metodo, para que no continue con la insercion en la BD
-            return;
+    
+        public void validarAccion(String accion) {
+        switch (accion) {
+            case "consultar":
+                this.listarUsuario();
+                break;
+                
+            case "guardar":
+            /*  debido a que el boton guardar se usara tanto para crear como para editar, debemos validar si el vehiculo que se ingresa existe, ya que solo asi podremos
+                determinar si se trata de crear un vehiculo nuevo o si se esta editando un vehiculo existente */
+                if(this.buscarUsuario()==null)
+                    this.crearUsuario();
+                else
+                    this.editarUsuario();
+                break;
+                
+            case "eliminar":
+                this.eliminarUsuario();
+                break;   
+                
+            default:
+                throw new AssertionError();
         }
-        else{
+    }
+    
+    private void crearUsuario(){
+                
+        if(this.validarIdNoVacio() == false) return;
+
             this.establecerFechaHoraMembresia();
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            usuarioDAO.insertarUsuario(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
-            ingresoExitoso = Boolean.TRUE;
-        }
+            usuarioDAO.insertar(id,nombre,telefono,correo,membresia,fechaHoraMembresia);
+            accionExitosa = Boolean.TRUE;
 
     }
     public Usuario buscarUsuario(){
-        
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        return usuarioDAO.consultarUsuarioPorId(id);
+                
+        usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.consultarPorId(id);
         
     }
+    
+    //la razon de la existencia de este metodo (existiendo en buscarUsuario) es por que este se ejecuta desde esta clase, el otro 
+    //desde la clase VehiculoService
+    private void listarUsuario(){
+        
+        if(this.validarIdNoVacio() == false) return;
+        
+        Usuario usuario = new Usuario();
+        
+        try {
+            usuario = usuarioDAO.consultarPorId(id);
+            datosUsuario = new HashMap<>();
+            
+            if(usuario == null){
+                mensajeFallido = "el usuario a consultar no existe";
+                accionFallida = Boolean.TRUE;
+            }
+            else{
+                datosUsuario.put("id", usuario.getId());
+                datosUsuario.put("nombre", usuario.getNombre());
+                datosUsuario.put("telefono", usuario.getTelefono());
+                datosUsuario.put("correo", usuario.getCorreo());
+                datosUsuario.put("membresia mensual", String.valueOf(usuario.getMembresia()));
+                accionExitosa = Boolean.TRUE;
+                //este atributo permitira que el boton de eliminar sea visible solo si la consulta fue exitosa
+                botonEliminar = Boolean.TRUE;                
+            }
+            
+        } catch (NullPointerException e) {
+            System.out.println("usuario nulo");
+        }
+    }
+    
+    private void editarUsuario() {
+        
+        if(this.validarIdNoVacio() == false) return;
+        usuarioDAO.editar(id,nombre,telefono,correo,membresia);
+        
+        datosUsuario = new HashMap<>();
+        datosUsuario.put("id", id);
+        accionExitosa = Boolean.TRUE;
+        
+    }
+
+    private void eliminarUsuario() {
+        
+        if(this.validarIdNoVacio() == false) return;
+        
+        usuarioDAO.borrar(id);
+        accionExitosa = Boolean.TRUE;
+
+    }
+    
+    private Boolean validarIdNoVacio(){
+        
+        if(id.isEmpty()){
+            accionFallida = Boolean.TRUE;
+            mensajeFallido = "El campo Numero de identificacion no debe quedar vacio";
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    
     private void establecerFechaHoraMembresia(){
         //obtener la fecha actual
         LocalDateTime actual = LocalDateTime.now();
@@ -64,17 +158,26 @@ public class UsuarioService {
         fechaHoraMembresia = actual.format(formatter);
     }
 
-    public Boolean getIngresoExitoso() {
-        return ingresoExitoso;
+    public Map<String, String> getDatosUsuario() {
+        return datosUsuario;
+    }
+    
+    public String getMensajeFallido() {
+        return mensajeFallido;
     }
 
-    public Boolean getIngresoFallido() {
-        return ingresoFallido;
+    public Boolean getAccionExitosa() {
+        return accionExitosa;
     }
 
-    public void validarAccion(String accion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Boolean getAccionFallida() {
+        return accionFallida;
+    }
+
+    public Boolean getBotonEliminar() {
+        return botonEliminar;
     }
     
     
+
 }

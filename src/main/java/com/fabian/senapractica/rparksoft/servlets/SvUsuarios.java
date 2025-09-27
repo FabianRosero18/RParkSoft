@@ -11,9 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 /**
  *
@@ -53,8 +51,8 @@ public class SvUsuarios extends HttpServlet {
         usuario.validarAccion(accion);
         usuario.crearUsuario();
         
-        request.setAttribute("ingresoExitoso", usuario.getIngresoExitoso());
-        request.setAttribute("ingresoFallido", usuario.getIngresoFallido());
+        request.setAttribute("ingresoExitoso", usuario.getAccionExitosa());
+        request.setAttribute("ingresoFallido", usuario.getAccionFallida());
         //se usa request dispatcher para cargar el jsp sin eliminar los seteos de atributos de arriba
         request.getRequestDispatcher("usuarios.jsp").forward(request, response);
     }

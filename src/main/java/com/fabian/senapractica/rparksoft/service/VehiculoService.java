@@ -110,7 +110,9 @@ public class VehiculoService {
         if(usuario!= null){
             if(this.validarIdNoVacio() == false) return;
             vehiculoDAO.editar(placa,tipo,color,marca,usuario);
-
+            
+            
+            //al momento de editar solamente vamos a mostrar en el formulario el ID, para que el usuario pueda consultarlo nuevamente
             datosVehiculo = new HashMap<>();
             datosVehiculo.put("placa", placa);
         }
