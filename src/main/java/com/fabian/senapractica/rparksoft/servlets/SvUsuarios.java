@@ -49,10 +49,12 @@ public class SvUsuarios extends HttpServlet {
         
         UsuarioService usuario = new UsuarioService(id,nombre,telefono,correo,membresia);
         usuario.validarAccion(accion);
-        usuario.crearUsuario();
         
+        request.setAttribute("datosUsuario", usuario.getDatosUsuario());
         request.setAttribute("ingresoExitoso", usuario.getAccionExitosa());
         request.setAttribute("ingresoFallido", usuario.getAccionFallida());
+        request.setAttribute("mensajeFallido", usuario.getMensajeFallido());
+        request.setAttribute("botonEliminar", usuario.getBotonEliminar());
         //se usa request dispatcher para cargar el jsp sin eliminar los seteos de atributos de arriba
         request.getRequestDispatcher("usuarios.jsp").forward(request, response);
     }

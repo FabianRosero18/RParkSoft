@@ -86,7 +86,7 @@ public class UsuarioService {
     }
     
     //la razon de la existencia de este metodo (existiendo en buscarUsuario) es por que este se ejecuta desde esta clase, el otro 
-    //desde la clase VehiculoService
+    //desde la clase VehiculoService, y generaria un NullPointerExcepcion al validarIdNoVacio.
     private void listarUsuario(){
         
         if(this.validarIdNoVacio() == false) return;
@@ -106,7 +106,7 @@ public class UsuarioService {
                 datosUsuario.put("nombre", usuario.getNombre());
                 datosUsuario.put("telefono", usuario.getTelefono());
                 datosUsuario.put("correo", usuario.getCorreo());
-                datosUsuario.put("membresia mensual", String.valueOf(usuario.getMembresia()));
+                datosUsuario.put("membresia", String.valueOf(usuario.getMembresia()));
                 accionExitosa = Boolean.TRUE;
                 //este atributo permitira que el boton de eliminar sea visible solo si la consulta fue exitosa
                 botonEliminar = Boolean.TRUE;                

@@ -104,7 +104,6 @@ public class VehiculoService {
         
     private void editarVeiculo() {
         
-        System.out.println("entro a editar");
         Usuario usuario = this.validarUsuarioExistente();
         
         if(usuario!= null){
@@ -115,10 +114,13 @@ public class VehiculoService {
             //al momento de editar solamente vamos a mostrar en el formulario el ID, para que el usuario pueda consultarlo nuevamente
             datosVehiculo = new HashMap<>();
             datosVehiculo.put("placa", placa);
+            accionExitosa = Boolean.TRUE;
         }
         else{
             mensajeFallido = "Usuario no existente, debe crearse primero el usuario";
             accionFallida = Boolean.TRUE;
+            //debido a que el metodo consultarVehiculo coloca este atributo en TRUE, nosotros debemos ponerlo en FALSE en este lugar para que no muestre mensaje de exito.
+            accionExitosa = Boolean.FALSE;
         }
     }
     

@@ -83,6 +83,7 @@ public class VehiculoDAO {
     
     public void borrar(String placa){
         EntityManager em = JpaUtil.getEntityManager();
+        
         vehiculo = em.find(Vehiculo.class, placa);
         try {
             em.getTransaction().begin();

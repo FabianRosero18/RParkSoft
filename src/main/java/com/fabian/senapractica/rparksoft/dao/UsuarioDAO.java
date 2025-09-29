@@ -16,12 +16,12 @@ import jakarta.persistence.EntityManager;
  */
 public class UsuarioDAO {
     
-    //private EntityManager em;
     //entidad/modelo
     private Usuario usuario;
 
-
+    
     public void insertar(String id, String nombre, String telefono, String correo, Boolean membresia, String fechaHoraMembresia){
+        //es necesario hacer la instancia de usuario para poder hacer el persist, ya que vamos a utilizar objetos en memoria
         usuario = new Usuario();
         EntityManager em = JpaUtil.getEntityManager();
         try {
@@ -56,6 +56,46 @@ public class UsuarioDAO {
         return usuario;
     }
     
+    public void editar(String id, String nombre, String telefono, String correo, Boolean membresia) {
+        
+        EntityManager em = JpaUtil.getEntityManager();
+        usuario = em.find(Usuario.class, id);
+        //debido a que estamos creando la instancia de usuario al hacer la consulta (em.find), no es necesario instanciar con el "new"
+        try {
+            em.getTransaction().begin();
+            usuario.setId(id);
+            usuario.setNombre(nombre);
+            usuario.setTelefono(telefono);
+            usuario.setCorreo(correo);
+            usuario.setMembresia(membresia);
+            em.merge(usuario);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+
+    }
+
+    public void borrar(String id) {
+        
+        EntityManager em = JpaUtil.getEntityManager();
+        
+        usuario = em.find(Usuario.class, id);
+        try {
+            em.getTransaction().begin();
+            em.remove(usuario);
+            em.getTransaction().commit();
+            
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+
+    }
+    
     public static boolean actualizarFechaHoraMembresia(Vehiculo vehiculo, String fechaHoraActual){
        
         Boolean renovacion = Boolean.FALSE;
@@ -77,13 +117,4 @@ public class UsuarioDAO {
         
         return renovacion;
     }
-
-    public void editar(String id, String nombre, String telefono, String correo, Boolean membresia) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void borrar(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

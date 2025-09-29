@@ -48,7 +48,7 @@
                             </div>    
                             <div class="row m-2">    
                                 <div class="col">
-                                    <input class="form-control" type="text" name="id">   
+                                    <input class="form-control" type="text" name="id" value="${datosUsuario['id']}">   
                                 </div>    
                             </div>        
                         </div>
@@ -60,7 +60,7 @@
                             </div>
                             <div class="row m-2">
                                 <div class="col">
-                                    <input class="form-control" type="text" name="nombre">   
+                                    <input class="form-control" type="text" name="nombre" value="${datosUsuario['nombre']}">   
                                 </div>    
                             </div>        
                         </div>                 
@@ -76,7 +76,7 @@
                             </div>    
                             <div class="row m-2">    
                                 <div class="col">
-                                    <input class="form-control" type="text" name="telefono">   
+                                    <input class="form-control" type="text" name="telefono" value="${datosUsuario['telefono']}">   
                                 </div>    
                             </div>                          
                         </div>  
@@ -89,7 +89,7 @@
                             </div>
                             <div class="row m-2">
                                 <div class="col">
-                                    <input class="form-control" type="text" name="correo">   
+                                    <input class="form-control" type="text" name="correo" value="${datosUsuario['correo']}">   
                                 </div>    
                             </div>        
                         </div>                 
@@ -104,10 +104,15 @@
                             <div class="row m-2">
                                 <div class="col">
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="membresia" id="btnradio1" value="true" autocomplete="off" >
+                                    <input type="radio" class="btn-check" name="membresia" id="btnradio1" 
+                                        value="true" autocomplete="off"
+                                        <%-- lo siguiente valida si el atributo es true o false y selecciona segun el que corresponde al usuario--%>
+                                        ${datosUsuario["membresia"] eq 'true' ? "checked" : ""}>
                                     <label class="btn btn-outline-dark fw-bold bg-info w-50" for="btnradio1">SI</label>
 
-                                    <input type="radio" class="btn-check" name="membresia" id="btnradio2" value="false" autocomplete="off" checked>
+                                    <input type="radio" class="btn-check" name="membresia" id="btnradio2" 
+                                        value="false" autocomplete="off"
+                                        ${datosUsuario["membresia"] eq 'false' ? "checked" : ""}>
                                     <label class="btn btn-outline-dark fw-bold bg-info w-50" for="btnradio2">NO</label>
                                     </div>
                                 </div>    
@@ -120,7 +125,7 @@
                 <div class="row">
                     <div class="col">                    
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <p class="fs-3">Usuario ingresado exitosamente</p>
+                            <p class="fs-3">Accion realizada con exito</p>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
@@ -130,7 +135,7 @@
                 <div class="row">
                     <div class="col">                    
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <p class="fs-3">El campo de Numero de identificacion no puede estar vacio </p>
+                            <p class="fs-3">ERROR: ${mensajeFallido}</p>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </div>
